@@ -79,6 +79,29 @@ public class Items extends Item{
     public static ItemEnhanceGemBox itemEnhanceGemBox = (ItemEnhanceGemBox)(new ItemEnhanceGemBox(Constant.getNextItemID())).setUnlocalizedName("enhance_gem_box_phase1");
     public static ItemGemShard itemGemShard = (ItemGemShard)(new ItemGemShard(Constant.getNextItemID())).setUnlocalizedName("gem_shard");
 
+
+
+    public static final Item furnaceClay = new ItemFurnace(Block.furnaceClayIdle, Materials.clay);
+    public static final Item furnaceClayBurning = new ItemFurnace(Block.furnaceClayBurning, Materials.clay);
+    public static final Item furnaceCobblestone = new ItemFurnace(Block.furnaceIdle, Materials.stone);
+    public static final Item furnaceCobblestoneBurning = new ItemFurnace(Block.furnaceBurning, Materials.stone);
+    public static final Item furnaceHardenedClay = new ItemFurnace(Block.furnaceHardenedClayIdle, Materials.hardened_clay);
+    public static final Item furnaceHardenedClayBurning = new ItemFurnace(Block.furnaceHardenedClayBurning, Materials.hardened_clay);
+    public static final Item furnaceNetherrack = new ItemFurnace(Block.furnaceNetherrackIdle, Materials.netherrack);
+    public static final Item furnaceNetherrackBurning = new ItemFurnace(Block.furnaceNetherrackBurning, Materials.netherrack);
+    public static final Item furnaceObsidian = new ItemFurnace(Block.furnaceObsidianIdle, Materials.obsidian);
+    public static final Item furnaceObsidianBurning = new ItemFurnace(Block.furnaceObsidianBurning, Materials.obsidian);
+    public static final Item furnaceSandstone = new ItemFurnace(Block.furnaceSandstoneIdle, Materials.sand);
+    public static final Item furnaceSandstoneBurning = new ItemFurnace(Block.furnaceSandstoneBurning, Materials.sand);
+    public static final Item furnaceVibranium = new ItemFurnace(Blocks.furnaceVibraniumIdle, Materials.vibranium);
+    public static final Item furnaceVibraniumBurning = new ItemFurnace(Blocks.furnaceVibraniumBurning, Materials.vibranium);
+    public static final Item clubCopper = new ItemClubMetal(Constant.getNextItemID(), Material.copper);
+    public static final Item clubSilver = new ItemClubMetal(Constant.getNextItemID(),Material.silver);
+    public static final ItemCoin coinVibranium = createInstance(ItemCoin.class, new Class[]{Integer.TYPE, Material.class}, Constant.getNextItemID(), Materials.vibranium);
+    public static final Item doorVibranium = new ItemDoor(Constant.getNextItemID(), Materials.vibranium);
+    public static final Item fishRodVibranium = new ItemFishingRod(Constant.getNextItemID(), Materials.vibranium);
+    public static final Item endBook = new ItemEndBook(Constant.getNextItemID());
+
     private static Item register(String resourceLocation, Item item, CreativeModeTab tab) {
         item.setResourceLocation(item.getResourceLocationPrefix() + resourceLocation);
         item.setUnlocalizedName(resourceLocation);
@@ -92,10 +115,10 @@ public class Items extends Item{
         return item;
     }
 
-    @Overwrite
-    public void a(int par1, CreativeModeTab par2CreativeTabs, List par3List) {
-//        par3List.add(new ItemStack(par1, 1, 0));
-    }
+//    @Overwrite
+//    public void a(int par1, CreativeModeTab par2CreativeTabs, List par3List) {
+////        par3List.add(new ItemStack(par1, 1, 0));
+//    }
 
     public static void registerItems() {
         register("obsidian_stick", OBSIDIAN_STICK, CreativeModeTab.tabMaterials);
@@ -162,9 +185,88 @@ public class Items extends Item{
         register("gem/enhance_gem_phase5", itemEnhanceGem6).setUnlocalizedName("enhance_gem_phase6").setLowestCraftingDifficultyToProduce(1.0F);
 
         Constant.initItemArray();
+
+        register("furnace_clay", furnaceClay);
+        register("furnace_clay_burning", furnaceClayBurning);
+        register("furnace_stone", furnaceCobblestone);
+        register("furnace_stone_burning", furnaceCobblestoneBurning);
+        register("furnace_hclay", furnaceHardenedClay);
+        register("furnace_hclay", furnaceHardenedClayBurning);
+        register("furnace_netherrack", furnaceNetherrack);
+        register("furnace_netherrack_burning", furnaceNetherrackBurning);
+        register("furnace_Obsidian", furnaceObsidian);
+        register("furnace_Obsidian_burning", furnaceObsidianBurning);
+        register("furnace_sand_stone", furnaceSandstone);
+        register("furnace_sand_stone_burning", furnaceSandstoneBurning);
+        register("furnace_vibranium", furnaceVibranium);
+        register("furnace_vibranium_burning", furnaceVibraniumBurning);
+        register("copper_club", clubCopper).setUnlocalizedName("copper_club").setLowestCraftingDifficultyToProduce(1.0F);
+        register("silver_club", clubSilver).setUnlocalizedName("silver_club").setLowestCraftingDifficultyToProduce(1.0F);
+        register("fishing_rods/vibranium_fishrod", fishRodVibranium);
+        register("vibranium_coin", coinVibranium);
+        register("vibranium_door", doorVibranium);
+        register("end_book", endBook, CreativeModeTab.tabTools);
     }
 
     public static void registerRecipes(RecipeRegister register) {
+        register.registerShapelessRecipe(new ItemStack(endBook), true, Block.enderChest, Item.book);
+        register.registerShapedRecipe(new ItemStack(doorVibranium),
+                false,
+                "NN ",
+                "NN ",
+                "NN ",
+                'N',
+                VIBRANIUM_INGOT);
+        register.registerShapedRecipe(new ItemStack(doorVibranium),
+                false,
+                " NN",
+                " NN",
+                " NN",
+                'N',
+                VIBRANIUM_INGOT);
+        register.registerShapedRecipe(new ItemStack(fishRodVibranium),
+                false,
+                "  S",
+                " SL",
+                "XZL",
+                'L', Item.silk,
+                'Z', VIBRANIUM_NUGGET,
+                'S', OBSIDIAN_STICK,
+                'X', Item.fishingRodAncientMetal);
+        register.registerShapedRecipe(new ItemStack(fishRodVibranium),
+                false,
+                "  X",
+                " SL",
+                "SZL",
+                'L', Item.silk,
+                'Z', VIBRANIUM_NUGGET,
+                'S', OBSIDIAN_STICK,
+                'X', Item.fishingRodAncientMetal);
+        register.registerShapedRecipe(new ItemStack(fishRodVibranium),
+                false,
+                "  S",
+                " XL",
+                "SZL",
+                'L', Item.silk,
+                'Z', VIBRANIUM_NUGGET,
+                'S', OBSIDIAN_STICK,
+                'X', Item.fishingRodAncientMetal);
+
+
+        ItemCoin[] coins = new ItemCoin[]{Item.coinCopper, Item.coinSilver, Item.coinGold, Item.coinAncientMetal, Item.coinMithril, Item.coinAdamantium, coinVibranium};
+
+        for (ItemCoin coin : coins) {
+            for (int plank_subtype = 1; plank_subtype <= 9; ++plank_subtype) {
+                register.registerShapelessRecipe(new ItemStack(coin.getNuggetPeer(), plank_subtype), true, new Object[]{new ItemStack(coin, plank_subtype)});
+            }
+
+            register.registerShapelessRecipe(new ItemStack(coin), true, new Object[]{new ItemStack(coin.getNuggetPeer())});
+        }
+
+
+
+
+
         for(int j = 0; j < 16; j++){
             register.registerShapelessRecipe(new ItemStack(Item.bed, 1, j), true, new Object[] {new ItemStack(Item.dyePowder, 1, j), new ItemStack(Item.bed, 1, 0)});
         }
