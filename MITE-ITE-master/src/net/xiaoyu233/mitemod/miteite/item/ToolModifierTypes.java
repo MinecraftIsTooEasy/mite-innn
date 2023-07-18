@@ -39,8 +39,8 @@ public enum ToolModifierTypes implements ItemModifierTypes{
 //    MELTING(1.0f,"熔毁",EnumChatFormat.RED,1,itemStack -> itemStack.getItem() instanceof ItemPickaxe && hasNotOtherMiningModifier(itemStack,1),1),
     LAST_STAND(0.67F,"不破之盾",EnumChatFormat.YELLOW,1,(stack -> true),3),
     NATURE_BLESSING(0.125f,"自然祝福",EnumChatFormat.GREEN,1, ToolModifierTypes::isWeapon, 4),
-    APOCALYPSE(1.0f,"天启",EnumChatFormat.DARK_RED,2,ToolModifierTypes::isWeapon, 4);
-//    BEHEADING_MODIFIER(0.02f, "斩首" , EnumChatFormats.DEAR_GREEN,1, ToolModifierTypes::isWeapon, 5);
+    APOCALYPSE(1.0f,"天启",EnumChatFormat.DARK_RED,2,ToolModifierTypes::isWeapon, 4),
+    BEHEADING_MODIFIER(0.02f, "斩首" , EnumChatFormat.DARK_GREEN,1, itemStack -> !ToolModifierTypes.isBeheading(itemStack), 5);
     public final String nbtName;
     public final float levelAddition;
     public final String displayName;
@@ -72,6 +72,11 @@ public enum ToolModifierTypes implements ItemModifierTypes{
     public static boolean isWeapon(ItemStack stack) {
         Item item = stack.getItem();
         return item instanceof ItemSword || item instanceof ItemBattleAxe || item instanceof ItemWarHammer || item instanceof ItemCudgel;
+    }
+
+    public static boolean isBeheading(ItemStack stack) {
+        Item item = stack.getItem();
+        return item instanceof ItemSword || item instanceof ItemCudgel;
     }
 
     @Override

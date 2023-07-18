@@ -61,7 +61,7 @@ public class Blocks extends Block{
     public static final Block blockStairsColorful14 = new BlockStairsColorful(190, blockColorful, 14);
     public static final Block blockStairsColorful15 = new BlockStairsColorful(191, blockColorful, 15);
     public static final BlockSpawn blockSpawn = (new BlockSpawn(192, Material.stone));
-    public static final Block fancyRed = (new BlockFancyRed(193, Material.diamond, 4)).setCreativeTab(CreativeModeTab.tabBlock);
+    public static final Block fancyRed = (new BlockFancyRed(193, Material.diamond, 6)).setCreativeTab(CreativeModeTab.tabBlock);
     public static final Block gemSetting = (new BlockGemSetting(194, Material.stone, (new BlockConstants()).setNeverHidesAdjacentFaces())).setUnlocalizedName("gem_setting").setCreativeTab(CreativeModeTab.tabDecorations);
     public static final BlockBed blackBed = (BlockBed)(new BlockBed(256).setSub(0).setAttr(0.2F, 0.6F, "black_bed", "black_bed"));
     public static final BlockBed redBed = (BlockBed)(new BlockBed(257).setSub(1).setAttr(0.2F, 0.6F, "red_bed", "red_bed"));

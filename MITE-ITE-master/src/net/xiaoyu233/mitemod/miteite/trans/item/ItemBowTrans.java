@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.item;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.item.Materials;
+import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -53,6 +54,43 @@ public class ItemBowTrans extends Item {
             } else {
                this.setMaxDamage(32);
             }
+         }
+      }
+   }
+
+   @Overwrite
+   public boolean onItemRightClick(EntityPlayer player, float partial_tick, boolean ctrl_is_down) {
+      if (EnchantmentManager.hasEnchantment(player.getHeldItemStack(), Enchantments.enchantmentGet)) {
+         if (!player.inCreativeMode() && player.inventory.getReadiedArrowForEnchantment() == null) {
+            return false;
+         } else {
+            player.nocked_arrow = player.inventory.getReadiedArrowForEnchantment();
+            if (player.nocked_arrow == null && player.inCreativeMode()) {
+               player.nocked_arrow = Item.arrowFlint;
+            }
+
+            if (player.onServer()) {
+               player.sendPacketToAssociatedPlayers((new Packet85SimpleSignal(EnumSignal.nocked_arrow)).setShort(player.nocked_arrow.itemID).setEntityID(player), false);
+            }
+
+            player.setHeldItemInUse();
+            return true;
+         }
+      } else{
+         if (!player.inCreativeMode() && player.inventory.getReadiedArrow() == null) {
+            return false;
+         } else {
+            player.nocked_arrow = player.inventory.getReadiedArrow();
+            if (player.nocked_arrow == null && player.inCreativeMode()) {
+               player.nocked_arrow = Item.arrowFlint;
+            }
+
+            if (player.onServer()) {
+               player.sendPacketToAssociatedPlayers((new Packet85SimpleSignal(EnumSignal.nocked_arrow)).setShort(player.nocked_arrow.itemID).setEntityID(player), false);
+            }
+
+            player.setHeldItemInUse();
+            return true;
          }
       }
    }

@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.container;
 
 import net.minecraft.*;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(Container.class)
 public abstract class ContainerTrans {
     @Shadow
+    @Final
     public final EntityPlayer player;
     public ContainerTrans(EntityPlayer player) {
         this.player = player;

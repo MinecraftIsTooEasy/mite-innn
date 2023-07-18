@@ -309,11 +309,7 @@ public class MITEITEEvents {
         }
 
         if (par2Str.startsWith("firework")) {
-            if(player.isOpenFireworkShow) {
-                player.isOpenFireworkShow = false;
-            } else {
-                player.isOpenFireworkShow = true;
-            }
+            player.isOpenFireworkShow = !player.isOpenFireworkShow;
             event.setExecuteSuccess(true);
         }
 

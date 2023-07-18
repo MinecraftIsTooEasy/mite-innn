@@ -8,6 +8,9 @@ item.tooltip.ID=ID
 item.tooltip.SUB=Sub
 item.copper_club.name=铜棒
 item.silver_club.name=银棒
+item.fishing_rods/vibranium_fishrod.name=钓鱼竿
+material.vibranium.name=振金
+enchantment.get=索取
 
 
 

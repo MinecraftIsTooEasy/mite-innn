@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.container;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.ItemBaubles;
 import net.xiaoyu233.mitemod.miteite.item.ItemDynamicCore;
 import net.xiaoyu233.mitemod.miteite.item.ItemRingKiller;
 import net.xiaoyu233.mitemod.miteite.item.Items;
@@ -21,12 +22,12 @@ import java.util.Map;
 @Mixin(PlayerInventory.class)
 public class PlayerInventoryTrans {
    @Shadow
-   public ItemStack[] mainInventory = new ItemStack[36];
+   public ItemStack[] mainInventory;
 
    public ItemStack[] jewelryInventory = new ItemStack[8];
 
    @Shadow
-   public ItemStack[] armorInventory = new ItemStack[4];
+   public ItemStack[] armorInventory;
 
    @Shadow
    public EntityPlayer player;
@@ -51,15 +52,35 @@ public class PlayerInventoryTrans {
 //      this.player.addChatMessage("检测");
 //   }
 
+   public int getHotbarSlotContainArrowForEnchantment() {
+      for(int var2 = 0; var2 < this.mainInventory.length; ++var2) {
+         if (this.mainInventory[var2] != null && this.mainInventory[var2].getItem() instanceof ItemArrow && this.mainInventory[var2].stackSize > 0) {
+            return var2;
+         }
+      }
+
+      return -1;
+   }
+
+   public ItemArrow getReadiedArrowForEnchantment() {
+      int slot_index = this.getHotbarSlotContainArrowForEnchantment();
+      if (slot_index < 0) {
+         return null;
+      } else {
+         ItemStack item_stack = this.mainInventory[slot_index];
+         return item_stack == null ? null : (ItemArrow)item_stack.getItem();
+      }
+   }
+
    public ItemStack getRingKiller() {
       ItemStack itemStack = null;
-      for(int i = 0; i < this.jewelryInventory.length; ++i) {
-         if (this.jewelryInventory[i] != null && (this.jewelryInventory[i].getItem() instanceof ItemRingKiller)) {
-            if(itemStack == null) {
-               itemStack = this.jewelryInventory[i];
+      for (ItemStack stack : this.jewelryInventory) {
+         if (stack != null && (stack.getItem() instanceof ItemRingKiller)) {
+            if (itemStack == null) {
+               itemStack = stack;
             } else {
-               if(((ItemRingKiller) this.jewelryInventory[i].getItem()).getLevel() > ((ItemRingKiller)itemStack.getItem()).getLevel()) {
-                  itemStack = this.jewelryInventory[i];
+               if (((ItemRingKiller) stack.getItem()).getLevel() > ((ItemRingKiller) itemStack.getItem()).getLevel()) {
+                  itemStack = stack;
                }
             }
          }
@@ -67,10 +88,19 @@ public class PlayerInventoryTrans {
       return itemStack;
    }
 
+   public ItemStack getItemBaubles() {
+      for (ItemStack stack : this.jewelryInventory) {
+         if (stack != null && (stack.getItem() instanceof ItemBaubles)) {
+            return stack;
+         }
+      }
+      return null;
+   }
+
    public ItemStack getDynamicCore() {
-      for(int i = 0; i < this.jewelryInventory.length; ++i) {
-         if (this.jewelryInventory[i] != null && (this.jewelryInventory[i].getItem() instanceof ItemDynamicCore)) {
-            return this.jewelryInventory[i];
+      for (ItemStack stack : this.jewelryInventory) {
+         if (stack != null && (stack.getItem() instanceof ItemDynamicCore)) {
+            return stack;
          }
       }
       return null;

@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 import net.minecraft.*;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.item.GemModifierTypes;
+import net.xiaoyu233.mitemod.miteite.item.ToolModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import org.spongepowered.asm.mixin.Mixin;
@@ -107,7 +108,8 @@ public abstract class EntityLivingTrans extends Entity {
       if (var2 instanceof EntityPlayer) {
          ItemStack heldItemStack = ((EntityPlayer) var2).getHeldItemStack();
          if (heldItemStack != null) {
-            float modifierValue = EnchantmentManager.getEnchantmentLevel(Enchantments.BEHEADING,heldItemStack) * Configs.wenscConfig.beheadingChanceBoostPerLvl.ConfigValue;
+            float modifierValue = EnchantmentManager.getEnchantmentLevel(Enchantments.BEHEADING, heldItemStack) * Configs.wenscConfig.beheadingChanceBoostPerLvl.ConfigValue
+                    + ToolModifierTypes.BEHEADING_MODIFIER.getModifierValue(heldItemStack.getTagCompound());
             if (modifierValue > 0.0F) {
                boolean dropHead = (float) this.rand.nextInt(100) < modifierValue * 100.0F;
                if (dropHead) {

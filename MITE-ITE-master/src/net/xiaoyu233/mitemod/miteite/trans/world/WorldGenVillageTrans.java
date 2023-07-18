@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.world;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -13,7 +14,8 @@ import java.util.Random;
 @Mixin(WorldGenVillage.class)
 public abstract class WorldGenVillageTrans extends StructureGenerator{
     @Shadow
-    public static final List villageSpawnBiomes = Arrays.asList(BiomeBase.plains, BiomeBase.desert);
+    @Final
+    public static List villageSpawnBiomes;
     @Shadow
     private int terrainType;
     @Shadow

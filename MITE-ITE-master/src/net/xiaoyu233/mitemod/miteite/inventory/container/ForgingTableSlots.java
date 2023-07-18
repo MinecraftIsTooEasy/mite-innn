@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.inventory.container;
 
 import com.google.common.collect.Lists;
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 import net.xiaoyu233.mitemod.miteite.item.recipe.ForgingRecipe;
 import net.xiaoyu233.mitemod.miteite.item.recipe.ForgingTableRecipes;
@@ -89,7 +90,16 @@ public class ForgingTableSlots extends InventorySubcontainer {
                 }
             }
         }
+    }
 
+    public Slot getProtectSlot(){
+        List<Slot> currentMaterials = Lists.newArrayList(this.up, this.left, this.right, this.downLeft, this.downRight);
+        for (Slot current : currentMaterials) {
+            if (current.getStack() != null && current.getStack().getItem() == Items.UNIVERSAL_ENHANCE_STONE) {
+                return current;
+            }
+        }
+        return null;
     }
 
     public void damageHammerAndAxe(int hammerDurabilityCost, int axeDurabilityCost) {

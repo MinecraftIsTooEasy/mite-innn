@@ -101,6 +101,9 @@ public class Items extends Item{
     public static final Item doorVibranium = new ItemDoor(Constant.getNextItemID(), Materials.vibranium);
     public static final Item fishRodVibranium = new ItemFishingRod(Constant.getNextItemID(), Materials.vibranium);
     public static final Item endBook = new ItemEndBook(Constant.getNextItemID());
+    public static final Item baublesDamageBoost = new ItemBaubles(Constant.getNextItemID(), MobEffectList.damageBoost);
+    public static final Item baublesMoveSpeed = new ItemBaubles(Constant.getNextItemID(), MobEffectList.moveSpeed);
+    public static final Item baublesResistance = new ItemBaubles(Constant.getNextItemID(), MobEffectList.resistance);
 
     private static Item register(String resourceLocation, Item item, CreativeModeTab tab) {
         item.setResourceLocation(item.getResourceLocationPrefix() + resourceLocation);
@@ -206,6 +209,9 @@ public class Items extends Item{
         register("vibranium_coin", coinVibranium);
         register("vibranium_door", doorVibranium);
         register("end_book", endBook, CreativeModeTab.tabTools);
+        register("baubles/damage_boost", baublesDamageBoost);
+        register("baubles/move_speed", baublesMoveSpeed);
+        register("baubles/resistance", baublesResistance);
     }
 
     public static void registerRecipes(RecipeRegister register) {

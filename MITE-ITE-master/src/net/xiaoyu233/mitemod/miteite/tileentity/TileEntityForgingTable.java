@@ -80,8 +80,10 @@ public class TileEntityForgingTable extends TileEntity implements IInventory {
         this.slots.damageHammerAndAxe(currentRecipe.getHammerDurabilityCost() / 2, currentRecipe.getAxeDurabilityCost() / 2);
         this.slots.costItems(currentRecipe);
         ItemStack result = this.slots.getToolItem();
-        for (IFaultFeedback iFaultFeedback : currentRecipe.getFaultFeedback()) {
-            result = iFaultFeedback.accept(result);
+        if(this.slots.getProtectSlot() == null) {
+            for (IFaultFeedback iFaultFeedback : currentRecipe.getFaultFeedback()) {
+                result = iFaultFeedback.accept(result);
+            }
         }
         this.slots.setToolItem(result);
         this.slots.updateSlots();
@@ -93,6 +95,17 @@ public class TileEntityForgingTable extends TileEntity implements IInventory {
         this.usedRecipe = null;
         this.maxTime = 0;
         this.slots.updateTime(0);
+    }
+
+    private void useProtect(){
+        if(this.slots.getProtectSlot() != null){
+            Slot slot = this.slots.getProtectSlot();
+            if(slot.getStack().stackSize == 1){
+                slot.putStack(null);
+            } else {
+                slot.getStack().setStackSize(slot.getStack().stackSize - 1);
+            }
+        }
     }
 
     @Override
@@ -212,10 +225,12 @@ public class TileEntityForgingTable extends TileEntity implements IInventory {
             if (this.forgingTime == this.currentFailCheckTime) {
                 if (this.getWorldObj().rand.nextInt(100) < this.slots.getChanceOfFailure(this.usedRecipe)) {
                     this.failForging();
+                    this.useProtect();
                     this.finishForging();
                 }
             } else if (this.forgingTime >= this.maxTime) {
                 this.completeForging();
+                this.useProtect();
                 this.finishForging();
             }
         }

@@ -6,6 +6,7 @@ import net.xiaoyu233.fml.relaunch.server.Main;
 import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
 import net.xiaoyu233.mitemod.miteite.block.BlockSpawn;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
+import net.xiaoyu233.mitemod.miteite.entity.EntitySkeletonBoss;
 import net.xiaoyu233.mitemod.miteite.entity.EntityZombieBoss;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
 import net.xiaoyu233.mitemod.miteite.item.*;
@@ -94,6 +95,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public int spawnStoneWorldId = -999;
 
    public int storeTorchTick = 0;
+
+   public int baublesTorchTick = 0;
 
    public int dynamicCoreLevel = 0;
 
@@ -1093,12 +1096,18 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
          return null;
       }
    }
-   public void attackMonsters(List <Entity>targets) {
+   public void attackMonsters(List<Entity> targets) {
       float damage = ((ItemRingKiller)itemRingKiller.getItem()).getRingKillerSkillDamage();
-      for(int i = 0; i< targets.size(); i++) {
-         EntityMonster entityMonster = targets.get(i) instanceof EntityMonster ? (EntityMonster)targets.get(i) : null;
-         if(entityMonster != null && (!EntityEnderman.class.isInstance(entityMonster) && !EntitySilverfish.class.isInstance(entityMonster) && !EntityZombieBoss.class.isInstance(entityMonster))) {
-            entityMonster.attackEntityFrom(new Damage(DamageSource.causePlayerDamage(this.getAsPlayer()), damage));
+      for (Entity target : targets) {
+         if(target instanceof EntityBat){
+            EntityBat bat = (EntityBat) target;
+            bat.attackEntityFrom(new Damage(DamageSource.causePlayerDamage(this.getAsPlayer()), damage));
+         } else {
+            EntityMonster entityMonster = target instanceof EntityMonster ? (EntityMonster) target : null;
+            if (entityMonster != null && (!EntityEnderman.class.isInstance(entityMonster) && !EntitySilverfish.class.isInstance(entityMonster) && !EntityZombieBoss.class.isInstance(entityMonster)
+                    && !EntitySkeletonBoss.class.isInstance(entityMonster))) {
+               entityMonster.attackEntityFrom(new Damage(DamageSource.causePlayerDamage(this.getAsPlayer()), damage));
+            }
          }
       }
    }
@@ -1107,14 +1116,33 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
            at = @At(value = "INVOKE",
                    target = "Lnet/minecraft/EntityLiving;onLivingUpdate()V",
                    shift = At.Shift.AFTER))
-   private void injectTick(CallbackInfo c){
+   private void injectTick(CallbackInfo callbackInfo){
       this.inventory.decrementAnimations();
+
+
+      if(this.baublesTorchTick <= 0) {
+         ItemStack baubles = this.inventory.getItemBaubles();
+         if(baubles != null) {
+            ItemBaubles itemBaubles = (ItemBaubles) baubles.getItem();
+            if (baubles.getItemDamage() < baubles.getMaxDamage() - 2) {
+               if (!this.worldObj.isRemote) {
+                  baubles.tryDamageItem(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)), 2, ReflectHelper.dyCast(this));
+                  this.addPotionEffect(new MobEffect(itemBaubles.getPotionEffectByBaubles().id, 25, 0));
+               }
+            }
+         }
+         this.baublesTorchTick = 20;
+      } else {
+         this.baublesTorchTick --;
+      }
+
+
+
       // 客户端
       if(this.storeTorchTick <= 0) {
          ItemStack currentItemStack = this.inventory.getDynamicCore();
          if(currentItemStack != null) {
             if(currentItemStack.getItemDamage() < currentItemStack.getMaxDamage() - 2) {
-
                this.dynamicCoreLevel = ((ItemDynamicCore)currentItemStack.getItem()).level;
                if (!this.worldObj.isRemote){
                   currentItemStack.tryDamageItem(DamageSource.causePlayerDamage(ReflectHelper.dyCast(this)), 2, ReflectHelper.dyCast(this));
