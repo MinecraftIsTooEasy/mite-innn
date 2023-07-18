@@ -1,6 +1,5 @@
 package net.xiaoyu233.mitemod.miteite.trans.render;
 
-import net.minecraft.Block;
 import net.minecraft.Minecraft;
 import net.minecraft.bfl;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;

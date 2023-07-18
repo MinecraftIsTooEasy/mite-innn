@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.block.tileentity;
 
 import net.minecraft.TileEntity;
+import net.xiaoyu233.mitemod.miteinnn.block.tileentity.TileEntityDireCrafting;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityForgingTable;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +20,7 @@ public class TileEntityTrans {
    private static void registerForgingTable(CallbackInfo c){
       addMapping(TileEntityForgingTable.class, "ForgingTable");
       addMapping(TileEntityGemSetting.class, "GemSetting");
+      addMapping(TileEntityDireCrafting.class, "DireCrafting");
    }
 
    public boolean isForbidenHopper() {

@@ -2,7 +2,6 @@ package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
-import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
 
 import java.util.Random;
 

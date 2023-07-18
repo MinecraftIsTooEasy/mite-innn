@@ -1,17 +1,14 @@
 package net.xiaoyu233.mitemod.miteite.trans.block;
 
-import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.block.BlockColorful;
-import net.xiaoyu233.mitemod.miteite.item.Materials;
-import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
+import net.minecraft.Block;
+import net.minecraft.ItemStack;
+import net.minecraft.LocaleI18n;
+import net.minecraft.StepSound;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-
-import java.lang.ref.Reference;
 
 @Mixin(Block.class)
 public abstract class BlockTrans {

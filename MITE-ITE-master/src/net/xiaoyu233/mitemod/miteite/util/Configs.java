@@ -1,12 +1,13 @@
 package net.xiaoyu233.mitemod.miteite.util;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.block.Blocks;
-import net.xiaoyu233.mitemod.miteite.item.Items;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 public class Configs {
     public static Map <String, ConfigItem> wenscMap = new HashMap<>();

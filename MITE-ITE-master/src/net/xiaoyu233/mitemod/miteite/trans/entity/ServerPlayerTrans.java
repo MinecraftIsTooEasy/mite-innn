@@ -3,6 +3,8 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.fml.util.ReflectHelper;
+import net.xiaoyu233.mitemod.miteinnn.block.gui.container.ContainerExtremeCrafting;
+import net.xiaoyu233.mitemod.miteinnn.block.tileentity.TileEntityDireCrafting;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerChestMinecart;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerForgingTable;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerGemSetting;
@@ -13,7 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Arrays;
@@ -89,14 +90,22 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
       this.openContainer.onCraftGuiOpened(this);
    }
 
-   public void displayGUIGemSetting(TileEntityGemSetting tileEntityGemSetting)
-   {
+   public void displayGUIGemSetting(TileEntityGemSetting tileEntityGemSetting) {
       this.getNextWindowId();
       this.playerNetServerHandler.sendPacket((new Packet100OpenWindow(this.currentWindowId, 15, tileEntityGemSetting.getCustomNameOrUnlocalized(), tileEntityGemSetting.getSizeInventory(), tileEntityGemSetting.hasCustomName())).setCoords(tileEntityGemSetting));
       this.openContainer = new ContainerGemSetting(this, tileEntityGemSetting);
       this.openContainer.windowId = this.currentWindowId;
       this.openContainer.onCraftGuiOpened(this);
    }
+
+    public void displayGUIExtremeCrafting(World world, int x, int y, int z, TileEntityDireCrafting tileEntityDireCrafting) {
+        this.getNextWindowId();
+//        System.out.println("SERVERPLAYER");
+        this.playerNetServerHandler.sendPacket((new Packet100OpenWindow(this.currentWindowId, 16, tileEntityDireCrafting.getCustomNameOrUnlocalized(), tileEntityDireCrafting.getSizeInventory(), tileEntityDireCrafting.hasCustomName())).setCoords(tileEntityDireCrafting));
+        this.openContainer = new ContainerExtremeCrafting(this, world, x, y, z, tileEntityDireCrafting);
+        this.openContainer.windowId = this.currentWindowId;
+        this.openContainer.onCraftGuiOpened(this);
+    }
 
    @Override
    @Shadow
@@ -191,7 +200,9 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
 
    }
 
-   @Redirect(
+    @Shadow public int ping;
+
+    @Redirect(
            method = {"readEntityFromNBT"},
            at = @At(
                    value = "INVOKE",

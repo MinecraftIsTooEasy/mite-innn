@@ -1,4 +1,4 @@
-package net.xiaoyu233.mitemod.miteite.item;
+package net.xiaoyu233.mitemod.miteinnn.item;
 
 import net.minecraft.CreativeModeTab;
 import net.minecraft.EntityPlayer;

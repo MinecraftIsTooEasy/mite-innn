@@ -1,6 +1,5 @@
 package net.xiaoyu233.mitemod.miteite.gui;
 
-import com.sun.imageio.plugins.common.I18N;
 import net.minecraft.EntityPlayer;
 import net.minecraft.awy;
 import net.minecraft.bjo;

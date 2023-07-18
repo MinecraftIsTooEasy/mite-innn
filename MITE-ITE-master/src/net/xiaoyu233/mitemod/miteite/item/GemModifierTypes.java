@@ -1,10 +1,5 @@
 package net.xiaoyu233.mitemod.miteite.item;
 
-import net.minecraft.IIcon;
-import net.minecraft.Material;
-
-import javax.swing.*;
-
 public enum GemModifierTypes{
     damage("damage", "White"),
     health("health", "Red"),

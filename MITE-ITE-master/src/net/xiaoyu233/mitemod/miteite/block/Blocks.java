@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteinnn.block.BlockDireCrafting;
 import net.xiaoyu233.mitemod.miteite.item.GemModifierTypes;
 import net.xiaoyu233.mitemod.miteite.item.ItemLeaves1;
 import net.xiaoyu233.mitemod.miteite.item.Items;
@@ -10,14 +11,11 @@ import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.RecipeRegister;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
-import org.spongepowered.asm.mixin.injection.Inject;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.List;
 
 import static net.xiaoyu233.mitemod.miteite.item.Items.VIBRANIUM_INGOT;
-import static net.xiaoyu233.mitemod.miteite.item.Items.VIBRANIUM_NUGGET;
 
 public class Blocks extends Block{
     public static final Block blockForgingTable = new BlockForgingTable(getNextBlockID())
@@ -85,11 +83,10 @@ public class Blocks extends Block{
     public static final Block stairsMaple = (new BlockStairs1(273, planks, 4)).setUnlocalizedName("stairsMaple");
     public static final Block stairsCherry = (new BlockStairs1(274, planks, 5)).setUnlocalizedName("stairsCherry");
 
+
     public static final Block vibraniumDoor = ReflectHelper.createInstance(BlockDoor.class, new Class[] {int.class,Material.class}
             , 501, Materials.vibranium).setStepSound_(soundMetalFootstep);
-
-
-
+    public static final Block direCrafting = new BlockDireCrafting(502, Material.mithril);
 
 
     static {
@@ -136,6 +133,7 @@ public class Blocks extends Block{
     public static void registerBlocks(){
 
         registerItemBlock(vibraniumDoor,"door_vibranium");
+        registerItemBlock(direCrafting,"avaritia/dire_crafting");
 
 
         registerAnvil(anvilVibranium,"anvil_vibranium");

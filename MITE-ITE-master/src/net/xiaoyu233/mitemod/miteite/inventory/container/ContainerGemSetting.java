@@ -1,9 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.inventory.container;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.block.BlockGemSetting;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
 

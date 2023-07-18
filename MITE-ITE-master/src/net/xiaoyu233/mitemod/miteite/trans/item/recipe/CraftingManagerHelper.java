@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.item.recipe;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteinnn.block.RegisterINFRecipes;
 import net.xiaoyu233.mitemod.miteite.util.RegisterHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,6 +34,7 @@ public abstract class CraftingManagerHelper {
       RegisterHelper.registerAllItems();
       RecipesMITE.addCraftingRecipes(crafters);
       RegisterHelper.registerAllRecipes(crafters);
+      RegisterINFRecipes.registerALLRecipes();
    }
 
    @Redirect(method = "<init>",

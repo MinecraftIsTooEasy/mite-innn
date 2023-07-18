@@ -3,7 +3,6 @@ package net.xiaoyu233.mitemod.miteite.trans;
 import net.minecraft.EnumChatFormat;
 import net.minecraft.Minecraft;
 import net.minecraft.client.main.Main;
-import net.xiaoyu233.mitemod.miteite.util.Constant;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;

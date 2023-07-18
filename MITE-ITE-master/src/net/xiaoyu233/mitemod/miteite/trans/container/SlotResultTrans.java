@@ -11,13 +11,84 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(SlotResult.class)
-public class SlotResultTrans {
+public class SlotResultTrans extends Slot {
    @Shadow
    private int amountCrafted;
    @Shadow
    private EntityPlayer thePlayer;
+   @Shadow
+   public CraftingResult crafting_result;
 
-   @Shadow public CraftingResult crafting_result;
+   public SlotResultTrans(IInventory inventory, int slot_index, int display_x, int display_y) {
+      super(inventory, slot_index, display_x, display_y);
+   }
+//   @Shadow
+//   @Final
+//   private IInventory craftMatrix;
+//   @Shadow
+//   public int crafting_result_index;
+//   @Shadow
+//   private void modifyStackForRightClicks(EntityPlayer player) {
+//   }
+//   @Shadow
+//   protected int getMinCraftingResultIndex(EntityPlayer player) {
+//      return 1;
+//   }
+//   @Shadow
+//   protected int getMaxCraftingResultIndex(EntityPlayer player) {
+//      return 1;
+//   }
+//
+//
+//   @Overwrite
+//   public void onSlotClicked(EntityPlayer player, int button, Container container) {
+//      if (this.getStack() != null) {
+//         if (button == 0) {
+//            if (!this.canPlayerCraftItem(player)) {
+//               return;
+//            }
+//
+//            if (player instanceof ClientPlayer) {
+//               ClientPlayer entity_client_player_mp = (ClientPlayer)player;
+//               entity_client_player_mp.crafting_proceed = true;
+//               entity_client_player_mp.hasCurse(Curse.clumsiness, true);
+//            }
+//         } else if (button == 1) {
+//            this.tryIncrementCraftingResultIndex(player);
+//         }
+//
+//      }
+//   }
+//
+//   @Shadow
+//   private void tryIncrementCraftingResultIndex(EntityPlayer player) {
+//   }
+//   @Shadow
+//   public boolean canPlayerCraftItem(EntityPlayer player) {
+//      return false;
+//   }
+
+//   @Overwrite
+//   private void setCraftingResultIndex(int crafting_result_index, EntityPlayer player) {
+//      System.out.println("test");
+//      if (this.crafting_result != null && this.getHasStack()) {
+//         if (this.crafting_result.quality_override == null) {
+//            crafting_result_index = MathHelper.clamp_int(crafting_result_index, this.getMinCraftingResultIndex(player), this.getMaxCraftingResultIndex(player));
+//         } else {
+//            crafting_result_index = this.crafting_result.quality_override.ordinal();
+//         }
+//
+//         if (crafting_result_index != this.crafting_result_index) {
+//            this.crafting_result_index = crafting_result_index;
+//            player.resetCraftingProgress();
+//         }
+//
+//         this.modifyStackForRightClicks(player);
+//      }
+////      else {
+////         player.clearCrafting();
+////      }
+//   }
 
    @Redirect(method = "modifyStackForRightClicks",at = @At(value = "INVOKE",target = "Lnet/minecraft/ItemStack;setQuality(Lnet/minecraft/EnumQuality;)Lnet/minecraft/ItemStack;"))
    private ItemStack redirectRemoveSetQuality(ItemStack caller, EnumQuality quality){
@@ -35,6 +106,66 @@ public class SlotResultTrans {
       }
       return caller.hasDamagedItem();
    }
+
+//   @Overwrite
+//   public void onPickupFromSlot(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack) {
+//      int consumption = this.crafting_result.consumption;
+//      this.amountCrafted = par2ItemStack.stackSize;
+//      this.onCrafting(par2ItemStack);
+//      par1EntityPlayer.inventory.addItemStackToInventoryOrDropIt(par2ItemStack.copy());
+//      int xp_reclaimed = 0;
+//      System.out.println("1213");
+//
+//
+//      for (int i = 0; i < this.craftMatrix.getSizeInventory(); ++i) {
+//         ItemStack itemstack = this.craftMatrix.getStackInSlot(i);
+//         ItemStack itemstack1 = new ItemStack(itemstack.getItem().getContainerItem());
+//
+//         if (itemstack != null) {
+//            this.craftMatrix.decrStackSize(i, 1);
+//         }
+//
+//         if (itemstack1 != null) {
+//            if (this.craftMatrix.getStackInSlot(i) == null) {
+//               this.craftMatrix.setInventorySlotContents(i, itemstack1);
+//            } else if (!this.thePlayer.inventory.addItemStackToInventory(itemstack1)) {
+//               this.thePlayer.dropPlayerItemWithRandomChoice(itemstack1, false);
+//            }
+//         }
+//      }
+//
+////      for(int var3 = 0; var3 < this.craftMatrix.getSizeInventory(); ++var3) {
+////         ItemStack var4 = this.craftMatrix.getStackInSlot(var3);
+////         if (var4 != null) {
+////            Item item = var4.getItem();
+////            if (item instanceof ItemCoin) {
+////               ItemCoin coin = (ItemCoin)item;
+////               xp_reclaimed += coin.getExperienceValue();
+////            }
+////
+////            this.craftMatrix.decrStackSize(var3, consumption);
+////            if (var4.getItem().hasContainerItem()) {
+////               ItemStack var5 = new ItemStack(var4.getItem().getContainerItem());
+////               Item container_item = var5.getItem();
+////               if (container_item.getClass() != par2ItemStack.getItem().getClass() && (!var4.getItem().doesContainerItemLeaveCraftingGrid(var4) || !this.thePlayer.inventory.addItemStackToInventory(var5))) {
+////                  if (this.craftMatrix.getStackInSlot(var3) == null) {
+////                     this.craftMatrix.setInventorySlotContents(var3, var5);
+////                  } else {
+////                     this.thePlayer.dropPlayerItem(var5);
+////                  }
+////               }
+////            } else if (var4.itemID == Block.workbench.blockID) {
+////               this.thePlayer.inventory.addItemStackToInventoryOrDropIt(BlockWorkbench.getBlockComponent(var4.getItemSubtype()));
+////            }
+////         }
+////      }
+//
+//      if (xp_reclaimed > 0) {
+//         par1EntityPlayer.addExperience(xp_reclaimed, true, false);
+//      }
+//
+//   }
+
 
    @Overwrite
    protected void onCrafting(ItemStack par1ItemStack) {
@@ -113,6 +244,19 @@ public class SlotResultTrans {
 
          this.thePlayer.addStat(AchievementList.buildPickaxe, 1);
       }
+   }
 
+   public int getNumCraftingResults_(EntityPlayer player){
+      return this.getNumCraftingResults(player);
+   }
+   public void setInitialItemStack_(EntityPlayer player, MITEContainerCrafting container){
+      this.setInitialItemStack(player, container);
+   }
+   @Shadow
+   protected int getNumCraftingResults(EntityPlayer player) {
+      return 1;
+   }
+   @Shadow
+   protected void setInitialItemStack(EntityPlayer player, MITEContainerCrafting container) {
    }
 }

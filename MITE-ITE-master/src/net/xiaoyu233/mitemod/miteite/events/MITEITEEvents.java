@@ -11,10 +11,6 @@ import net.xiaoyu233.mitemod.miteite.network.*;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 
-import java.util.Arrays;
-
-import static net.minecraft.CommandAbstract.parseIntBounded;
-
 public class MITEITEEvents {
 
     @Subscribe

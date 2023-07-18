@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.util.stream.Stream;
 
 @Mixin(Packet.class)
 public abstract class PacketTrans{

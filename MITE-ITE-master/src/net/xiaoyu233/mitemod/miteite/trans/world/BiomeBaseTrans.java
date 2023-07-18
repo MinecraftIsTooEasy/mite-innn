@@ -4,7 +4,6 @@ import net.minecraft.*;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.entity.*;
-import net.xiaoyu233.mitemod.miteite.trans.entity.EntityGiantZombieTrans;
 import net.xiaoyu233.mitemod.miteite.world.WorldGenBigTreeWithIDAndMeta;
 import net.xiaoyu233.mitemod.miteite.world.WorldGenTreesWithTreeId;
 import org.spongepowered.asm.mixin.Final;

@@ -3,7 +3,6 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.Block;
 import net.minecraft.EntityAIMoveToTree;
-import net.minecraft.PathEntity;
 import net.minecraft.World;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import org.spongepowered.asm.mixin.Mixin;

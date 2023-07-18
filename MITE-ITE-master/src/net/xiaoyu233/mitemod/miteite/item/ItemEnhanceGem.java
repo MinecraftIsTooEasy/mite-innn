@@ -1,6 +1,5 @@
 package net.xiaoyu233.mitemod.miteite.item;
 
-import com.sun.imageio.plugins.common.I18N;
 import net.minecraft.*;
 
 import java.util.List;

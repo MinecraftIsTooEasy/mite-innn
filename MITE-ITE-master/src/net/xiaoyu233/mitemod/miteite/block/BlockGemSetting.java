@@ -1,7 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityForgingTable;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 
 public class BlockGemSetting extends Block implements IContainer {

@@ -1,11 +1,9 @@
 package net.xiaoyu233.mitemod.miteite.trans.entity;
 
-import com.sun.org.apache.bcel.internal.generic.GETFIELD;
 import net.minecraft.*;
-import net.xiaoyu233.fml.relaunch.server.Main;
+import net.xiaoyu233.mitemod.miteinnn.block.tileentity.TileEntityDireCrafting;
+import net.xiaoyu233.mitemod.miteinnn.item.ItemBaubles;
 import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
-import net.xiaoyu233.mitemod.miteite.block.BlockSpawn;
-import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.entity.EntitySkeletonBoss;
 import net.xiaoyu233.mitemod.miteite.entity.EntityZombieBoss;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
@@ -19,7 +17,6 @@ import net.xiaoyu233.mitemod.miteite.util.BlockPos;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -763,7 +760,10 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public void displayGUIForgingTable(int x, int y, int z, ForgingTableSlots slots) {
    }
 
-   public void displayGUIGemSetting(TileEntityGemSetting par1TileEntityFurnace) {}
+   public void displayGUIGemSetting(TileEntityGemSetting par1TileEntityFurnace) {
+   }
+   public void displayGUIExtremeCrafting(World world, int x, int y, int z, TileEntityDireCrafting tileEntityDireCrafting) {
+   }
 
    @Shadow
    protected abstract void fall(float par1);
