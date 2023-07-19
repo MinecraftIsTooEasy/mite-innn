@@ -9,7 +9,7 @@ public class ItemBaubles extends Item implements IDamageableItem{
         this.potionEffect = mobEffectList;
         this.setMaxStackSize(1);
         this.setMaxDamage(10240);
-        this.setMaterial(Material.iron);
+        this.setMaterial(Material.mithril);
         this.setCreativeTab(CreativeModeTab.tabCombat);
     }
 
@@ -28,7 +28,20 @@ public class ItemBaubles extends Item implements IDamageableItem{
     public boolean isHarmedByLava() {
         return false;
     }
-
+    @Override
+    public int getRepairCost() {
+        return 2;
+    };
+    @Override
+    public Material getMaterialForDurability()
+    {
+        return Material.mithril;
+    }
+    @Override
+    public Material getMaterialForRepairs()
+    {
+        return Material.mithril;
+    }
     @Override
     public int getNumComponentsForDurability() {
         return 1;

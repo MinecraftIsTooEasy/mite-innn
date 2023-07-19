@@ -20,12 +20,13 @@ public class Enchantments {
     public static final Enchantment BEHEADING = new EnchantmentBeheading(getNextEnchantmentID(),yq.c,10);
     public static final Enchantment enchantmentFixed = new EnchantmentFixed(getNextEnchantmentID(), yq.c,15);
     public static final Enchantment enchantmentChain = new EnchantmentChain(getNextEnchantmentID(), yq.d,30);
-    public static final Enchantment enchantmentForge = new EnchantmentForge(15, yq.c, 10);
-    public static final Enchantment enchantmentGet = new EnchantmentGet(22, yq.c, 10);
-//    public static final Enchantment enchantmentRangeAttack = new EnchantmentRangeAttack(36, yq.d,30);
+    public static final Enchantment enchantmentForge = new EnchantmentForge(getNextEnchantmentID(), yq.c, 10);
+    public static final Enchantment enchantmentGet = new EnchantmentGet(getNextEnchantmentID(), yq.c, 10);
     public static List<Enchantment> individualEnchantments = new ArrayList<>();
     public static void registerEnchantments(){
-        Enchantments.registerEnchantmentsUnsafe(enchantmentFixed, CRIT, EXTEND, EMERGENCY, CONQUEROR, BEHEADING, enchantmentChain, enchantmentForge, enchantmentGet);
+        Enchantments.registerEnchantmentsUnsafe(enchantmentFixed, CRIT, EXTEND, EMERGENCY, CONQUEROR, BEHEADING, enchantmentChain
+                //, enchantmentForge, enchantmentGet
+        );
     }
 
     public static void registerEnchantmentsUnsafe(Enchantment... enchantments) {
@@ -37,6 +38,7 @@ public class Enchantments {
                 break;
             }
         }
+
         ArrayList<Enchantment> var0 = new ArrayList<>();
         for (Enchantment enchantment : enchantmentsList) {
             if (enchantment != null) {
