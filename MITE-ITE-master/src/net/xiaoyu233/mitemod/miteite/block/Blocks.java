@@ -212,6 +212,16 @@ public class Blocks extends Block{
 
 
     public static void registerRecipes(RecipeRegister register) {
+        register.registerShapedRecipe(new ItemStack(direCrafting), false,
+                "BBB",
+                "BDB",
+                "CAC",
+                'A', Blocks.glass,
+                'B', Items.diamond,
+                'C', Items.ingotMithril,
+                'D', new ItemStack(Blocks.workbench, 1, 9));
+
+
         register.registerShapelessRecipe(new ItemStack(blockStairsColorful0, 9), true, new ItemStack(blockStairsColorful15, 9));
         register.registerShapelessRecipe(new ItemStack(blockStairsColorful1, 9), true, new ItemStack(blockStairsColorful0, 9));
         register.registerShapelessRecipe(new ItemStack(blockStairsColorful2, 9), true, new ItemStack(blockStairsColorful1, 9));

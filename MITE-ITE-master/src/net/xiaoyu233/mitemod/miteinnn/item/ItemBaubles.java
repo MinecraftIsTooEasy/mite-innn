@@ -8,7 +8,7 @@ public class ItemBaubles extends Item implements IDamageableItem{
         super(id,null);
         this.potionEffect = mobEffectList;
         this.setMaxStackSize(1);
-        this.setMaxDamage(2048);
+        this.setMaxDamage(10240);
         this.setMaterial(Material.iron);
         this.setCreativeTab(CreativeModeTab.tabCombat);
     }
