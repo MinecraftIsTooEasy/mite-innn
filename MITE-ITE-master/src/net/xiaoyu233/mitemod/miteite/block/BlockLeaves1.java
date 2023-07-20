@@ -281,8 +281,7 @@ public final class BlockLeaves1 extends BlockTransparant {
         }
     }
 
-    public boolean hidesAdjacentSide(IBlockAccess block_access, int x, int y, int z, Block neighbor, int side)
-    {
-        return !graphicsLevel;
+    public boolean hidesAdjacentSide(IBlockAccess block_access, int x, int y, int z, Block neighbor, int side) {
+        return false;
     }
 }

@@ -54,7 +54,7 @@ public abstract class EntityFishingHookTrans extends Entity {
                float time_factor = (float)Math.min(Math.abs(time_of_day - 5500), Math.abs(time_of_day - 17500)) / 600.0F;
 
                int chance_in;
-               if (Configs.wenscConfig.BlnFinsh.ConfigValue) {
+               if (Configs.wenscConfig.blnFinsh.ConfigValue) {
                   chance_in = this.worldObj.isBlueMoon(true) ? 60 : MathHelper.clamp_int(((int)(120.0f * time_factor)), 60, 240);
                } else {
                   chance_in = this.worldObj.isBlueMoon(true) ? 600 : MathHelper.clamp_int(((int)(600.0f * time_factor)), 600, 2400);
