@@ -4,6 +4,7 @@ import net.minecraft.*;
 import net.xiaoyu233.fml.util.ReflectHelper;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.entity.*;
+import net.xiaoyu233.mitemod.miteite.trans.entity.EntityGiantZombieTrans;
 import net.xiaoyu233.mitemod.miteite.world.WorldGenBigTreeWithIDAndMeta;
 import net.xiaoyu233.mitemod.miteite.world.WorldGenTreesWithTreeId;
 import org.spongepowered.asm.mixin.Final;
@@ -132,10 +133,6 @@ public class BiomeBaseTrans {
 
    @Overwrite
    public WorldGenerator getRandomWorldGenForTrees(Random par1Random) {
-//      return (WorldGenerator)(par1Random.nextInt(5) == 0 ? this.worldGeneratorBigTree
-//              : par1Random.nextInt(2) == 0 ? this.worldGeneratorTrees
-//              : par1Random.nextInt(2) == 0 ? new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, 0, Blocks.leaves1, 0, false)
-//              : new WorldGenTreesWithTreeId(false, 4, Blocks.wood1, 1, Blocks.leaves1, 1, false));
       int percent = par1Random.nextInt(3);
       if(par1Random.nextInt(10) == 0) {
          switch (percent) {

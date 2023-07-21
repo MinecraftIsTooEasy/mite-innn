@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.block;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
+import org.spongepowered.asm.mixin.transformer.meta.MixinMerged;
 
 import java.util.Random;
 
@@ -281,7 +282,8 @@ public final class BlockLeaves1 extends BlockTransparant {
         }
     }
 
-    public boolean hidesAdjacentSide(IBlockAccess block_access, int x, int y, int z, Block neighbor, int side) {
+    public boolean hidesAdjacentSide(IBlockAccess block_access, int x, int y, int z, Block neighbor, int side)
+    {
         return false;
     }
 }

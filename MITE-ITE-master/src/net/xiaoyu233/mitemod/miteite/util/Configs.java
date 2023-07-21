@@ -1,13 +1,13 @@
 package net.xiaoyu233.mitemod.miteite.util;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.block.Blocks;
+import net.xiaoyu233.mitemod.miteite.item.EnumPriceItem;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class Configs {
     public static Map <String, ConfigItem> wenscMap = new HashMap<>();
@@ -161,7 +161,10 @@ public class Configs {
         public static ConfigItem <Double> zombieBossMaxHealth = new ConfigItem("zombieBossMaxHealth", 1000d, "僵尸BOSS最大血量", 1d ,10000d);
         public static ConfigItem <Double> zombieBossBaseDamage = new ConfigItem("zombieBossBaseDamage", 12d, "僵尸BOSS基础攻击伤害", 1d ,100d);
         public static ConfigItem <Float> zombieBossSpawnPercent = new ConfigItem("zombieBossSpawnPercent", 0.5f, "挖掘刷怪笼多大几率刷出僵尸BOSS", 0f,1f);
+
         public static ConfigItem <Integer> creeperFuseTime = new ConfigItem("creeperFuseTime", 30, "苦力怕蓄力时间(tick)", 10,1000);
+
+        public static ConfigItem <Boolean> skeletonRideBat = new ConfigItem("skeletonRideBat", true, "骷髅有概率骑蝙蝠");
 
         public static ConfigItem <Boolean> blnFinsh = new ConfigItem("blnFinsh", false, "是否开启急速钓鱼");
         public static ConfigItem <Boolean> isActiveSecondaryAttribute = new ConfigItem("isActiveSecondaryAttribute", true, "是否开启副属性");
@@ -169,8 +172,9 @@ public class Configs {
         public static ConfigItem <Double> skeletonBossBaseDamage = new ConfigItem("skeletonBossBaseDamage", 12d, "骷髅BOSS基础攻击伤害", 1d ,100d);
         public static ConfigItem <Float> skeletonBossSpawnPercent = new ConfigItem("skeletonBossSpawnPercent", 0.5f, "挖掘刷怪笼多大几率刷出骷髅BOSS", 0f,1f);
         public static ConfigItem <Boolean> isSkeletonandZombieSpawnBoth = new ConfigItem("isSkeletonandZombieSpawnBoth", true, "是否有机会在挖掘刷怪笼时同时生成多种boss");
-        public static ConfigItem <Boolean> isSpawnSkeletonWithBat = new ConfigItem("isSpawnSkeletonWithBat", true, "生成骷髅时是否有概率乘坐蝙蝠");
         public static ConfigItem <Boolean> hasBlockSpawnRecipe = new ConfigItem("hasBlockSpawnRecipe", true, "是否有复活传送阵配方");
+
+
 
 //        public static ConfigItem <String> md5String = new ConfigItem("md5String", new lh("wensc").a("busy"), "MD5");
 
@@ -179,7 +183,6 @@ public class Configs {
     public static void loadConfigs(){
         wenscMap.put("blnFinsh", wenscConfig.blnFinsh);
         wenscMap.put("hasBlockSpawnRecipe", wenscConfig.hasBlockSpawnRecipe);
-        wenscMap.put("isSpawnSkeletonWithBat", wenscConfig.isSpawnSkeletonWithBat);
         wenscMap.put("skeletonBossMaxHealth",wenscConfig.skeletonBossMaxHealth);
         wenscMap.put("skeletonBossBaseDamage",wenscConfig.skeletonBossBaseDamage);
         wenscMap.put("skeletonBossSpawnPercent",wenscConfig.skeletonBossSpawnPercent);
@@ -310,10 +313,11 @@ public class Configs {
         wenscMap.put("zombieBossBaseDamage", wenscConfig.zombieBossBaseDamage);
         wenscMap.put("zombieBossSpawnPercent", wenscConfig.zombieBossSpawnPercent);
         wenscMap.put("creeperFuseTime", wenscConfig.creeperFuseTime);
+        wenscMap.put("skeletonRideBat", wenscConfig.skeletonRideBat);
 
 //        wenscMap.put("md5", wenscConfig.md5String);
 
-        String filePth = "mite-innn.cfg";
+        String filePth = "mite-extreme.cfg";
         File file_mite = new File(filePth);
         if (file_mite.exists()) {
             Properties properties = new Properties();
@@ -341,13 +345,13 @@ public class Configs {
                 e.printStackTrace();
                 JFrame jFrame = new JFrame();
                 jFrame.setAlwaysOnTop(true);
-                JOptionPane.showMessageDialog(jFrame, "mite-innn.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
+                JOptionPane.showMessageDialog(jFrame, "mite-extreme.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
                 System.exit(0);
             }
         }
     }
     public static void beginToLoadShopConfig() {
-        String shopConfigFilePath = "mite-innn-shop.cfg";
+        String shopConfigFilePath = "mite-extreme-shop.cfg";
         File shopConfigFile = new File(shopConfigFilePath);
         if (shopConfigFile.exists()) {
             Properties properties = new Properties();
@@ -374,7 +378,7 @@ public class Configs {
                 e.printStackTrace();
                 JFrame jFrame = new JFrame();
                 jFrame.setAlwaysOnTop(true);
-                JOptionPane.showMessageDialog(jFrame, "mite-innn-shop.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
+                JOptionPane.showMessageDialog(jFrame, "mite-extreme-shop.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
                 System.exit(0);
             }
         }
@@ -392,12 +396,29 @@ public class Configs {
         if(itemPrice != null) {
             String [] soldPriceAndBuyPrice = itemPrice.split(",");
             if(soldPriceAndBuyPrice.length == 2) {
-                item.soldPriceArray.put(sub, Double.parseDouble(soldPriceAndBuyPrice[0]));
-                item.buyPriceArray.put(sub, Double.parseDouble(soldPriceAndBuyPrice[1]));
+                double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                double buyPrice = Double.parseDouble(soldPriceAndBuyPrice[1]);
+                itemStack.setPrice(soldPrice, buyPrice);
+                if(soldPrice > 0d || buyPrice > 0d) {
+                    Items.priceStackList.add(itemStack);
+                }
+                item.soldPriceArray.put(sub, soldPrice);
+                item.buyPriceArray.put(sub, buyPrice);
             } else {
-                item.soldPriceArray.put(sub, Double.parseDouble(soldPriceAndBuyPrice[0]));
+                double soldPrice = Double.parseDouble(soldPriceAndBuyPrice[0]);
+                itemStack.setPrice(soldPrice, 0d);
+                if(soldPrice > 0d) {
+                    Items.priceStackList.add(itemStack);
+                }
+                item.soldPriceArray.put(sub, soldPrice);
             }
         } else {
+            double soldPrice = (double)item.soldPriceArray.get(sub);
+            double buyPrice = (double)item.buyPriceArray.get(sub);
+            itemStack.setPrice(soldPrice, buyPrice);
+            if(soldPrice > 0d || buyPrice > 0d) {
+                Items.priceStackList.add(itemStack);
+            }
             if(item.getHasSubtypes()) {
                 fileWriter.write("// " + itemStack.getDisplayName() + " ID: " + itemStack.itemID + " meta:"+ sub + "\n");
                 fileWriter.write(itemStack.getUnlocalizedName() + "§" + sub + "=" + item.soldPriceArray.get(sub) +","+ item.buyPriceArray.get(sub)+ "\n\n");
@@ -417,6 +438,7 @@ public class Configs {
     }
 
     public static void  readShopConfigFromFile(File file_mite, Properties properties) {
+        Items.priceStackList = new ArrayList<>();
         try{
             FileWriter fileWriter = new FileWriter(file_mite.getName(), true);
             for (Item item : Item.itemsList) {
@@ -436,9 +458,20 @@ public class Configs {
                     }
                 }
             }
+
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            Collections.sort(Items.priceStackList, (o1, o2) -> {
+                double offset;
+                if(o2.getPrice().buyPrice > 0d && o1.getPrice().buyPrice > 0d) {
+                    offset = o1.getPrice().buyPrice - o2.getPrice().buyPrice;
+                } else {
+                    offset = o2.getPrice().buyPrice - o1.getPrice().buyPrice;
+                }
+                return  offset > 0 ? 1 : offset == 0 ? 0 : -1;
+            });
         }
     }
 
@@ -493,7 +526,7 @@ public class Configs {
     public static void generateConfigFile(File file) {
         try{
             FileWriter fileWritter = new FileWriter(file.getName());
-            fileWritter.write("// MITE-INNN配置文件，说明：【布尔类型：true为开启，false关闭】，在【名称=值】之间/之后不要存在空格或者其他无关字符，【tick：20tick=1秒】\n");
+            fileWritter.write("// MITE-Extreme配置文件，说明：【布尔类型：true为开启，false关闭】，在【名称=值】之间/之后不要存在空格或者其他无关字符，【tick：20tick=1秒】\n");
             for (Map.Entry<String, ConfigItem> entry: wenscMap.entrySet()) {
                 ConfigItem value = entry.getValue();
                 fileWritter.write("// " + value.ConfigComment + "\n");
@@ -508,7 +541,7 @@ public class Configs {
     public static void generateShopConfigFile(File file) {
         try{
             FileWriter fileWritter = new FileWriter(file.getName());
-            fileWritter.write("// MITE-INNN商店配置文件，说明：参数之间使用英文逗号分隔，请严格遵循格式（商品英文名=售出价格,购买价格），价格小于等于0代表不可出售或者不可购买，价格可以为小数，乱改造成无法启动概不负责\n");
+            fileWritter.write("// MITE-Extreme商店配置文件，说明：参数之间使用英文逗号分隔，请严格遵循格式（商品英文名=售出价格,购买价格），价格小于等于0代表不可出售或者不可购买，价格可以为小数，乱改造成无法启动概不负责\n");
             for (Item item : Item.itemsList) {
                 if(item != null) {
                     if(item instanceof ItemBlock) {

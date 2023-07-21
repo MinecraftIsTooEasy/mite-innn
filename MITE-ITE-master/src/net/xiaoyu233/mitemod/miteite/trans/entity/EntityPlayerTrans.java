@@ -765,6 +765,8 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public void displayGUIExtremeCrafting(World world, int x, int y, int z, TileEntityDireCrafting tileEntityDireCrafting) {
    }
 
+   public void displayGUIShop() {}
+
    @Shadow
    protected abstract void fall(float par1);
    

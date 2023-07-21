@@ -7,10 +7,16 @@ import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.RecipeRegister;
+import org.spongepowered.asm.mixin.Overwrite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static net.xiaoyu233.mitemod.miteite.util.ReflectHelper.createInstance;
 
 public class Items extends Item{
+    public static int shopSize = 0;
+    public static List<ItemStack> priceStackList = new ArrayList();
     public static final Item BLAZE_COAL_POWDER = new ItemBlazeCoalPowder(Constant.getNextItemID());
     public static final Item DIAMOND_CHUNK = createInstance(Item.class,new Class[]{int.class,Material.class,String.class},Constant.getNextItemID(),Material.diamond,"diamond_chunk").setCraftingDifficultyAsComponent(ItemRock.getCraftingDifficultyAsComponent(Material.diamond) /(float)4);
     public static final Item OBSIDIAN_STICK = createInstance(Item.class,new Class[]{int.class,Material.class,String.class},Constant.getNextItemID(),Material.obsidian,"obsidian_stick");
@@ -77,8 +83,6 @@ public class Items extends Item{
 
     public static ItemEnhanceGemBox itemEnhanceGemBox = (ItemEnhanceGemBox)(new ItemEnhanceGemBox(Constant.getNextItemID())).setUnlocalizedName("enhance_gem_box_phase1");
     public static ItemGemShard itemGemShard = (ItemGemShard)(new ItemGemShard(Constant.getNextItemID())).setUnlocalizedName("gem_shard");
-
-
 
     public static final Item furnaceClay = new ItemFurnace(Block.furnaceClayIdle, Materials.clay);
     public static final Item furnaceClayBurning = new ItemFurnace(Block.furnaceClayBurning, Materials.clay);
@@ -150,7 +154,7 @@ public class Items extends Item{
         register("adamantium_club", clubAdamantium).setUnlocalizedName("adamantium_club").setLowestCraftingDifficultyToProduce(1.0F);
         register("vibranium_club", clubVibranium).setUnlocalizedName("vibranium_club").setLowestCraftingDifficultyToProduce(1.0F);
 
-        register("stack_torch", Stack_Torch, CreativeModeTab.tabMisc).setUnlocalizedName("stack_torch").setMaxStackSize(64).setCraftingDifficultyAsComponent(1.0E-9F);
+        register("stack_torch", Stack_Torch).setUnlocalizedName("stack_torch").setMaxStackSize(64).setCraftingDifficultyAsComponent(1.0E-9F);
 
         register("lava_in_pipes", lavaInPipes).setUnlocalizedName("lava_in_pipes").setLowestCraftingDifficultyToProduce(1.0F);
         register("ring_killer/ring_killer_copper", ringKillerCopper).setUnlocalizedName("ring_killer_copper").setLowestCraftingDifficultyToProduce(1.0F);
@@ -285,39 +289,31 @@ public class Items extends Item{
         register.registerShapedRecipe(new ItemStack(clubAdamantium, 1), true, new Object[]{"###", "#*#"," # ", '#', Items.adamantiumNugget , '*', Items.ingotAdamantium});
         register.registerShapedRecipe(new ItemStack(clubVibranium, 1), true, new Object[]{"###", "#*#"," A ", '#', Items.VIBRANIUM_NUGGET , '*', Items.VIBRANIUM_INGOT, 'A', Items.voucherClubCore});
 
-//        register.registerShapedRecipe(new ItemStack(itemDynamicCoreIron, 1), true, new Object[]{"ABA", "BCB","DBD", 'A', Items.ingotIron, 'D', Blocks.blockIron , 'B', Blocks.glass, 'C', Blocks.blockRedstone});
-//        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAncient_metal, 1), true, new Object[]{"ABA", "BCB","DBD",'A', Items.ingotAncientMetal, 'D', Blocks.blockAncientMetal , 'B', Blocks.glass, 'C', Items.itemDynamicCoreIron});
-//        register.registerShapedRecipe(new ItemStack(itemDynamicCoreMithril, 1), true, new Object[]{"ABA", "BCB","DBD",'A', Items.ingotMithril, 'D', Blocks.blockMithril , 'B', Blocks.glass, 'C', Items.itemDynamicCoreAncient_metal});
-//        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAdamantium, 1), true, new Object[]{"ABA", "BCB","DBD", 'A', Items.ingotAdamantium, 'D', Blocks.blockAdamantium , 'B', Blocks.glass, 'C', Items.itemDynamicCoreMithril});
-//        register.registerShapedRecipe(new ItemStack(itemDynamicCoreVibranium, 1), true, new Object[]{"ABA", "BCB","DBD", 'A', Items.VIBRANIUM_INGOT, 'D', Blocks.blockVibranium , 'B', Blocks.glass, 'C', Items.itemDynamicCoreAdamantium});
-
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreIron, 1), true, "ABA", "BCB","ABA", 'A', Items.ingotIron, 'B', Blocks.glass, 'C', Blocks.blockRedstone);
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAncient_metal, 1), true, "ABA", "BCB","ABA",'A', Items.ingotAncientMetal, 'B', Blocks.glass, 'C', Items.itemDynamicCoreIron);
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreMithril, 1), true, "ABA", "BCB","ABA",'A', Items.ingotMithril, 'B', Blocks.glass, 'C', Items.itemDynamicCoreAncient_metal);
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAdamantium, 1), true, "ABA", "BCB","ABA", 'A', Items.ingotAdamantium, 'B', Blocks.glass, 'C', Items.itemDynamicCoreMithril);
-        register.registerShapedRecipe(new ItemStack(itemDynamicCoreVibranium, 1), true, "ABA", "BCB","ABA", 'A', Items.VIBRANIUM_INGOT, 'B', Blocks.glass, 'C', Items.itemDynamicCoreAdamantium);
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreIron, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.ingotIron, 'B', Blocks.glass, 'C', Blocks.blockRedstone});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAncient_metal, 1), true, new Object[]{"ABA", "BCB","ABA",'A', Items.ingotAncientMetal , 'B', Blocks.glass, 'C', Items.itemDynamicCoreIron});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreMithril, 1), true, new Object[]{"ABA", "BCB","ABA",'A', Items.ingotMithril, 'B', Blocks.glass, 'C', Items.itemDynamicCoreAncient_metal});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreAdamantium, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.ingotAdamantium, 'B', Blocks.glass, 'C', Items.itemDynamicCoreMithril});
+        register.registerShapedRecipe(new ItemStack(itemDynamicCoreVibranium, 1), true, new Object[]{"ABA", "BCB","ABA", 'A', Items.VIBRANIUM_INGOT, 'B', Blocks.glass, 'C', Items.itemDynamicCoreAdamantium});
 
         register.registerShapelessRecipe(new ItemStack(Items.voucherClubCore, 1), true, Items.voucherFishing, Items.voucherVillager, Items.voucherPlanting);
 
         if(Configs.wenscConfig.isRecipeGATorch.ConfigValue) {
-//            System.out.println("====================");
-//            System.out.println(Stack_Torch.itemID);
             for (int i = 0; i < 4; i++) {
-                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new ItemStack(Block.wood, 1, i), Item.silk, Item.coal, Item.coal);
-                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new ItemStack(Block.wood, 1, i), Item.sinew, Item.coal, Item.coal);
-                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new ItemStack(Block.wood, 1, i), Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1));
-                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new ItemStack(Block.wood, 1, i), Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1));
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, i), Item.silk, Item.coal, Item.coal});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, i), Item.sinew, Item.coal, Item.coal});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, i), Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Block.wood, 1, i), Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
 
-                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new ItemStack(Blocks.wood1, 1, i), Item.silk, Item.coal, Item.coal);
-                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new ItemStack(Blocks.wood1, 1, i), Item.sinew, Item.coal, Item.coal);
-                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new ItemStack(Blocks.wood1, 1, i), Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1));
-                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new ItemStack(Blocks.wood1, 1, i), Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1));
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Blocks.wood1, 1, i), Item.silk, Item.coal, Item.coal});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Blocks.wood1, 1, i), Item.sinew, Item.coal, Item.coal});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Blocks.wood1, 1, i), Item.silk, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
+                register.registerShapelessRecipe(new ItemStack(Stack_Torch, 1), true, new Object[]{new ItemStack(Blocks.wood1, 1, i), Item.sinew, new ItemStack(Item.coal, 1, 1), new ItemStack(Item.coal, 1, 1)});
             }
 
-            register.registerShapelessRecipe(new ItemStack(Block.torchWood, 64), true, Stack_Torch, Stack_Torch, Stack_Torch, Stack_Torch);
-            register.registerShapelessRecipe(new ItemStack(Block.torchWood, 48), true, Stack_Torch, Stack_Torch, Stack_Torch);
-            register.registerShapelessRecipe(new ItemStack(Block.torchWood, 32), true, Stack_Torch, Stack_Torch);
-            register.registerShapelessRecipe(new ItemStack(Block.torchWood, 16), true, Stack_Torch);
+            register.registerShapelessRecipe(new ItemStack(Block.torchWood, 64), true, new Object[]{Stack_Torch, Stack_Torch, Stack_Torch, Stack_Torch});
+            register.registerShapelessRecipe(new ItemStack(Block.torchWood, 48), true, new Object[]{Stack_Torch, Stack_Torch, Stack_Torch});
+            register.registerShapelessRecipe(new ItemStack(Block.torchWood, 32), true, new Object[]{Stack_Torch, Stack_Torch});
+            register.registerShapelessRecipe(new ItemStack(Block.torchWood, 16), true, new Object[]{Stack_Torch});
         }
 
 
@@ -331,17 +327,11 @@ public class Items extends Item{
         }
 
         for(int i =0; i < GemModifierTypes.values().length; i++) {
-//            register.registerShapedRecipe(new ItemStack(itemEnhanceGem2, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 0), '*', new ItemStack(itemEnhanceGem, 1, i)});
-//            register.registerShapedRecipe(new ItemStack(itemEnhanceGem3, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 1), '*', new ItemStack(itemEnhanceGem2, 1, i)});
-//            register.registerShapedRecipe(new ItemStack(itemEnhanceGem4, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 2), '*', new ItemStack(itemEnhanceGem3, 1, i)});
-//            register.registerShapedRecipe(new ItemStack(itemEnhanceGem5, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 3), '*', new ItemStack(itemEnhanceGem4, 1, i)});
-//            register.registerShapedRecipe(new ItemStack(itemEnhanceGem6, 1, i), true, new Object[]{" # ", "#*#"," # ", '#', new ItemStack(Items.itemGemShard, 1, 4), '*', new ItemStack(itemEnhanceGem5, 1, i)});
             register.registerShapelessRecipe(new ItemStack(itemEnhanceGem2, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 0), new ItemStack(itemEnhanceGem, 1, i)});
             register.registerShapelessRecipe(new ItemStack(itemEnhanceGem3, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 1), new ItemStack(itemEnhanceGem2, 1, i)});
             register.registerShapelessRecipe(new ItemStack(itemEnhanceGem4, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 2), new ItemStack(itemEnhanceGem3, 1, i)});
             register.registerShapelessRecipe(new ItemStack(itemEnhanceGem5, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 3), new ItemStack(itemEnhanceGem4, 1, i)});
             register.registerShapelessRecipe(new ItemStack(itemEnhanceGem6, 1, i), true, new Object[]{new ItemStack(Items.itemGemShard, 2, 4), new ItemStack(itemEnhanceGem5, 1, i)});
-
         }
 
         register.registerShapedRecipe(new ItemStack(OBSIDIAN_STICK), true, "#", "#", '#', Block.obsidian);

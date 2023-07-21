@@ -68,17 +68,17 @@ public abstract class BlockFurnaceMixin extends BlockDirectionalWithTileEntity {
     }
 
 
-    public boolean tryPlaceFromHeldItem(int x, int y, int z, EnumFace face, ItemStack item_stack, EntityPlayer player, float offset_x, float offset_y, float offset_z, boolean perform_placement_check, boolean drop_existing_block, boolean test_only) {
-        if (super.tryPlaceFromHeldItem(x, y, z, face, item_stack, player, offset_x, offset_y, offset_z, perform_placement_check, drop_existing_block, test_only)) {
-            if (!test_only && player.onServer()) {
-                TileEntityFurnace tileEntity = (TileEntityFurnace)player.worldObj.getBlockTileEntity(x, y, z);
-                tileEntity.addDamage(player.worldObj, x, y, z, item_stack.getItemDamage());
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    public boolean tryPlaceFromHeldItem(int x, int y, int z, EnumFace face, ItemStack item_stack, EntityPlayer player, float offset_x, float offset_y, float offset_z, boolean perform_placement_check, boolean drop_existing_block, boolean test_only) {
+//        if (super.tryPlaceFromHeldItem(x, y, z, face, item_stack, player, offset_x, offset_y, offset_z, perform_placement_check, drop_existing_block, test_only)) {
+//            if (!test_only && player.onServer()) {
+//                TileEntityFurnace tileEntity = (TileEntityFurnace)player.worldObj.getBlockTileEntity(x, y, z);
+//                tileEntity.addDamage(player.worldObj, x, y, z, item_stack.getItemDamage());
+//            }
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     @Shadow
     public abstract int getIdleBlockID();

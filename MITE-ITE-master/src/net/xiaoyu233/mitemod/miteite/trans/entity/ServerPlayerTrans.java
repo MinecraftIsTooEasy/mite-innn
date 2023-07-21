@@ -3,20 +3,20 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.fml.util.ReflectHelper;
-import net.xiaoyu233.mitemod.miteinnn.block.gui.container.ContainerExtremeCrafting;
-import net.xiaoyu233.mitemod.miteinnn.block.tileentity.TileEntityDireCrafting;
-import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerChestMinecart;
-import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerForgingTable;
-import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerGemSetting;
-import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
+import net.xiaoyu233.mitemod.miteite.inventory.container.*;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -51,6 +51,8 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
    private int last_nutrition;
    private int last_phytonutrients;
    private int last_protein;
+
+   private double last_money;
    @Shadow
    private int last_satiation;
    @Shadow
@@ -90,7 +92,8 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
       this.openContainer.onCraftGuiOpened(this);
    }
 
-   public void displayGUIGemSetting(TileEntityGemSetting tileEntityGemSetting) {
+   public void displayGUIGemSetting(TileEntityGemSetting tileEntityGemSetting)
+   {
       this.getNextWindowId();
       this.playerNetServerHandler.sendPacket((new Packet100OpenWindow(this.currentWindowId, 15, tileEntityGemSetting.getCustomNameOrUnlocalized(), tileEntityGemSetting.getSizeInventory(), tileEntityGemSetting.hasCustomName())).setCoords(tileEntityGemSetting));
       this.openContainer = new ContainerGemSetting(this, tileEntityGemSetting);
@@ -98,13 +101,24 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
       this.openContainer.onCraftGuiOpened(this);
    }
 
-    public void displayGUIExtremeCrafting(World world, int x, int y, int z, TileEntityDireCrafting tileEntityDireCrafting) {
+    public void displayGUIShop()
+    {
         this.getNextWindowId();
-//        System.out.println("SERVERPLAYER");
-        this.playerNetServerHandler.sendPacket((new Packet100OpenWindow(this.currentWindowId, 16, tileEntityDireCrafting.getCustomNameOrUnlocalized(), tileEntityDireCrafting.getSizeInventory(), tileEntityDireCrafting.hasCustomName())).setCoords(tileEntityDireCrafting));
-        this.openContainer = new ContainerExtremeCrafting(this, world, x, y, z, tileEntityDireCrafting);
+        this.playerNetServerHandler.sendPacket((new Packet100OpenWindow(this.currentWindowId, 16, "shop", 45, false)));
+        this.openContainer = new ContainerShop(this);
         this.openContainer.windowId = this.currentWindowId;
         this.openContainer.onCraftGuiOpened(this);
+        try
+        {
+            ByteArrayOutputStream var5 = new ByteArrayOutputStream();
+            DataOutputStream var6 = new DataOutputStream(var5);
+            var6.writeInt(Items.priceStackList.size());
+            this.playerNetServerHandler.sendPacket(new Packet250CustomPayload("MC|ShopSize", var5.toByteArray()));
+        }
+        catch (IOException var7)
+        {
+            var7.printStackTrace();
+        }
     }
 
    @Override
@@ -142,10 +156,12 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
          float health = this.getHealth();
          int satiation = this.getSatiation();
          int nutrition = this.getNutrition();
-         if (health != this.lastHealth || satiation != this.last_satiation || nutrition != this.last_nutrition || this.vision_dimming > 0.0F || this.phytonutrients != this.last_phytonutrients || this.protein != this.last_protein) {
+         if (health != this.lastHealth || satiation != this.last_satiation || nutrition != this.last_nutrition
+                 || this.vision_dimming > 0.0F || this.phytonutrients != this.last_phytonutrients || this.protein != this.last_protein || this.money != this.last_money) {
             Packet8UpdateHealth par1Packet = new Packet8UpdateHealth(health, satiation, nutrition, this.vision_dimming);
             par1Packet.setPhytonutrients(this.phytonutrients);
             par1Packet.setProtein(this.protein);
+            par1Packet.setMoney(this.money);
             this.playerNetServerHandler.sendPacket(par1Packet);
             this.lastHealth = health;
             this.last_satiation = satiation;
@@ -153,6 +169,7 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
             this.vision_dimming = 0.0F;
             this.last_phytonutrients = phytonutrients;
             this.last_protein = protein;
+            this.last_money = money;
          }
 
          if (this.getHealth() + this.getAbsorptionAmount() != this.field_130068_bO) {
@@ -200,9 +217,7 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
 
    }
 
-    @Shadow public int ping;
-
-    @Redirect(
+   @Redirect(
            method = {"readEntityFromNBT"},
            at = @At(
                    value = "INVOKE",

@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
+import net.xiaoyu233.mitemod.miteite.entity.EntityExchanger;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
@@ -357,7 +358,7 @@ public class EntitySkeletonTrans extends EntityMonster implements IRangedEntity 
 
       this.setCombatTask();
 
-      if(rand.nextInt(5) == 0 && Configs.wenscConfig.isSpawnSkeletonWithBat.ConfigValue) {
+      if(rand.nextInt(5) == 0 && Configs.wenscConfig.skeletonRideBat.ConfigValue) {
          EntityBat entityBat;
          // 近战骷髅
          if(this.getSkeletonType() > 0) {

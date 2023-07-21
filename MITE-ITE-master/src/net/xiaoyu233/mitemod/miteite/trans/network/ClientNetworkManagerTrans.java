@@ -1,7 +1,9 @@
 package net.xiaoyu233.mitemod.miteite.trans.network;
 
+import com.google.common.base.Charsets;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.gui.GuiForgingTable;
+import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.network.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -90,6 +92,37 @@ public class ClientNetworkManagerTrans extends NetworkManagerTrans{
    }
 
    @Overwrite
+   public void handleCustomPayload(Packet250CustomPayload par1Packet250CustomPayload) {
+      if ("MC|ShopSize".equals(par1Packet250CustomPayload.channel)){
+         DataInputStream var2 = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
+
+         try {
+            int shopSize = var2.readInt();
+            Items.shopSize = shopSize;
+         } catch (IOException var7) {
+            var7.printStackTrace();
+         }
+      } else if ("MC|TrList".equals(par1Packet250CustomPayload.channel)) {
+         DataInputStream var2 = new DataInputStream(new ByteArrayInputStream(par1Packet250CustomPayload.data));
+
+         try {
+            int var3 = var2.readInt();
+            awe var4 = this.h.n;
+            if (var4 != null && var4 instanceof axw && var3 == this.h.h.openContainer.windowId) {
+               IMerchant var5 = ((axw)var4).g();
+               MerchantRecipeList var6 = MerchantRecipeList.a(var2);
+               var5.a(var6);
+            }
+         } catch (IOException var7) {
+            var7.printStackTrace();
+         }
+      } else if ("MC|Brand".equals(par1Packet250CustomPayload.channel)) {
+         this.h.h.c(new String(par1Packet250CustomPayload.data, Charsets.UTF_8));
+      }
+
+   }
+
+   @Overwrite
    public void handleMobSpawn(Packet24MobSpawn par1Packet24MobSpawn) {
       double var2 = SpatialScaler.getPosX(par1Packet24MobSpawn.scaled_pos_x);
       double var4 = SpatialScaler.getPosY(par1Packet24MobSpawn.scaled_pos_y);
@@ -139,10 +172,10 @@ public class ClientNetworkManagerTrans extends NetworkManagerTrans{
       this.h.h.getFoodStats().setNutrition(par1Packet8UpdateHealth.nutrition, false);
       this.h.h.setPhytonutrients(par1Packet8UpdateHealth.phytonutrients);
       this.h.h.setProtein(par1Packet8UpdateHealth.protein);
+      this.h.h.money = par1Packet8UpdateHealth.money;
       if (this.h.h.vision_dimming < par1Packet8UpdateHealth.vision_dimming) {
          this.h.h.vision_dimming = par1Packet8UpdateHealth.vision_dimming;
       }
-
    }
 
    public void handleWindowItems(Packet104WindowItems par1Packet104WindowItems) {

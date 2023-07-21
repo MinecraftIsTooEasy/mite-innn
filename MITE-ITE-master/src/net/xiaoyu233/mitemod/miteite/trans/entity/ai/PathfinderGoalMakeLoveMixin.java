@@ -21,8 +21,8 @@ public class PathfinderGoalMakeLoveMixin extends PathfinderGoal {
         if(this.villagerObj.getRand().nextInt(2) == 0){
             var1.dropItemStack(new ItemStack(Items.voucherVillager));
         }
-
     }
+
     @Shadow
     private EntityVillager villagerObj;
     @Shadow

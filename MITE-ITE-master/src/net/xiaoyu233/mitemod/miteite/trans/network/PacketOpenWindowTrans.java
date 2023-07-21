@@ -1,7 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.trans.network;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteinnn.block.tileentity.TileEntityDireCrafting;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 import org.spongepowered.asm.mixin.Mixin;
@@ -136,21 +135,18 @@ public class PacketOpenWindowTrans {
             player.openContainer.windowId = this.windowId;
          }  else if (this.inventoryType == 15) {
             TileEntityGemSetting var3x = (TileEntityGemSetting)tile_entity;
-            if (this.useProvidedWindowTitle) {
+
+            if (this.useProvidedWindowTitle)
+            {
                var3x.setCustomInvName(this.windowTitle);
             }
 
             player.displayGUIGemSetting(var3x);
             player.openContainer.windowId = this.windowId;
-         }else if (this.inventoryType == 16) {
-            TileEntityDireCrafting tileEntity = (TileEntityDireCrafting) tile_entity;
-            if (this.useProvidedWindowTitle) {
-               tileEntity.setCustomInvName(this.windowTitle);
-            }
-
-            player.displayGUIExtremeCrafting(player.worldObj, this.x, this.y, this.z, tileEntity);
+         } else if (this.inventoryType == 16) {
+            player.displayGUIShop();
             player.openContainer.windowId = this.windowId;
-         } else {
+         }else {
             Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.inventoryType);
          }
       }
@@ -158,9 +154,9 @@ public class PacketOpenWindowTrans {
    }
 
    @Overwrite
-   public boolean hasCoords() {
-      return this.inventoryType == 0 || this.inventoryType == 1 || this.inventoryType == 2 || this.inventoryType == 3 || this.inventoryType == 4 || this.inventoryType == 5 || this.inventoryType == 7 || this.inventoryType == 8 || this.inventoryType == 9 || this.inventoryType == 10 || this.inventoryType == 15
-              || this.inventoryType == 16;
+   public boolean hasCoords()
+   {
+      return this.inventoryType == 0 || this.inventoryType == 1 || this.inventoryType == 2 || this.inventoryType == 3 || this.inventoryType == 4 || this.inventoryType == 5 || this.inventoryType == 7 || this.inventoryType == 8 || this.inventoryType == 9 || this.inventoryType == 10 || this.inventoryType == 15;
    }
 
    @Shadow
