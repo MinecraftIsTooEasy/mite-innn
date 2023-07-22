@@ -1,5 +1,15 @@
 # MITE-INNN更新日志
 
+
+
+## 0.2.8-BETA
+### 其他
+* 同步至mite-extreme-v0.1.5.1
+### bug
+* 修复了斩首的错误应用的bug
+
+---
+
 ## 0.2.7-BETA
 ### 其他
 * 同步至mite-extreme-v0.1.5.0

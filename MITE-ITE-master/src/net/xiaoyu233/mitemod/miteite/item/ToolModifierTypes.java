@@ -29,7 +29,7 @@ public enum ToolModifierTypes implements ItemModifierTypes{
     //Tool Modifiers
     EFFICIENCY_MODIFIER(0.25F,"急速",EnumChatFormat.DARK_RED,20, (stack -> !ToolModifierTypes.isWeapon(stack)),10),
     AQUADYNAMIC_MODIFIER(1.25F,"喜水",EnumChatFormat.AQUA,10, (stack -> !ToolModifierTypes.isWeapon(stack)),5),
-    DURABILITY_MODIFIER(0.1F,"耐久",EnumChatFormat.DARK_PURPLE,40,(stack -> true),5),
+    DURABILITY_MODIFIER(0.1F,"耐久",EnumChatFormat.DARK_PURPLE,40,( stack -> true),5),
     DAMAGE_MODIFIER(1.0F,"锋利", EnumChatFormat.WHITE,20, (ToolModifierTypes::isWeapon),10),
     SLOWDOWN_MODIFIER(1.0F,"织网",EnumChatFormat.GRAY,10, ToolModifierTypes::isWeapon,5),
     UNNATURAL_MODIFIER(0.1f,"超自然",EnumChatFormat.LIGHT_GRAY,6, itemStack -> !ToolModifierTypes.isWeapon(itemStack),5),
@@ -37,10 +37,11 @@ public enum ToolModifierTypes implements ItemModifierTypes{
     GEOLOGY(0.5f,"地质学",EnumChatFormat.LIGHT_PURPLE,2,itemStack -> itemStack.getItem() instanceof ItemPickaxe,1),
 
 //    MELTING(1.0f,"熔毁",EnumChatFormat.RED,1,itemStack -> itemStack.getItem() instanceof ItemPickaxe && hasNotOtherMiningModifier(itemStack,1),1),
-    LAST_STAND(0.67F,"不破之盾",EnumChatFormat.YELLOW,1,(stack -> true),3),
+    LAST_STAND(0.67F,"不破之盾",EnumChatFormat.YELLOW,1, (stack -> true),3),
     NATURE_BLESSING(0.125f,"自然祝福",EnumChatFormat.GREEN,1, ToolModifierTypes::isWeapon, 4),
-    APOCALYPSE(1.0f,"天启",EnumChatFormat.DARK_RED,2,ToolModifierTypes::isWeapon, 4),
-    BEHEADING_MODIFIER(0.02f, "斩首" , EnumChatFormat.DARK_GREEN,1, itemStack -> !ToolModifierTypes.isBeheading(itemStack), 5);
+    APOCALYPSE(1.0f,"天启",EnumChatFormat.DARK_RED,2, ToolModifierTypes::isWeapon, 4),
+    BEHEADING_MODIFIER(0.02f, "斩首" , EnumChatFormat.DARK_GREEN,1, ToolModifierTypes::isBeheading, 5);
+    // itemlevel addAttrA BEHEADING_MODIFIER 1
     public final String nbtName;
     public final float levelAddition;
     public final String displayName;
