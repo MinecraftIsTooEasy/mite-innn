@@ -324,6 +324,8 @@ public class Blocks extends Block{
         RecipesFurnace.smelting().addSmelting(Blocks.blockVibranium.blockID, new ItemStack(Items.itemGemShard.itemID, 1, 4));
 
         RecipesFurnace.smelting().addSmelting(Blocks.wood1.blockID, new ItemStack(Item.coal, 1, 1));
+
+//        RecipesFurnace.smelting().addSmelting(Blocks.direCrafting.blockID, new ItemStack(Items.endBook, 1, 0));
     }
 
     private static void registerForgingTableUpgradeRecipes(RecipeRegister register, ForgingTableLevel originalLevel, Item ingot){

@@ -317,7 +317,7 @@ public class Configs {
 
 //        wenscMap.put("md5", wenscConfig.md5String);
 
-        String filePth = "mite-extreme.cfg";
+        String filePth = "mite-innn.cfg";
         File file_mite = new File(filePth);
         if (file_mite.exists()) {
             Properties properties = new Properties();
@@ -345,19 +345,18 @@ public class Configs {
                 e.printStackTrace();
                 JFrame jFrame = new JFrame();
                 jFrame.setAlwaysOnTop(true);
-                JOptionPane.showMessageDialog(jFrame, "mite-extreme.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
+                JOptionPane.showMessageDialog(jFrame, "mite-innn.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
                 System.exit(0);
             }
         }
     }
     public static void beginToLoadShopConfig() {
-        String shopConfigFilePath = "mite-extreme-shop.cfg";
+        String shopConfigFilePath = "mite-innn-shop.cfg";
         File shopConfigFile = new File(shopConfigFilePath);
         if (shopConfigFile.exists()) {
             Properties properties = new Properties();
-            FileReader fr = null;
             try {
-                fr = new FileReader(shopConfigFile.getName());
+                FileReader fr = new FileReader(shopConfigFile.getName());
                 properties.load(fr);
                 fr.close();
                 readShopConfigFromFile(shopConfigFile, properties);
@@ -378,7 +377,7 @@ public class Configs {
                 e.printStackTrace();
                 JFrame jFrame = new JFrame();
                 jFrame.setAlwaysOnTop(true);
-                JOptionPane.showMessageDialog(jFrame, "mite-extreme-shop.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
+                JOptionPane.showMessageDialog(jFrame, "mite-innn-shop.cfg配置文件失败，请前往www.wensc.cn自行下载", "错误", 0);
                 System.exit(0);
             }
         }
@@ -526,7 +525,7 @@ public class Configs {
     public static void generateConfigFile(File file) {
         try{
             FileWriter fileWritter = new FileWriter(file.getName());
-            fileWritter.write("// MITE-Extreme配置文件，说明：【布尔类型：true为开启，false关闭】，在【名称=值】之间/之后不要存在空格或者其他无关字符，【tick：20tick=1秒】\n");
+            fileWritter.write("// MITE-INNN配置文件，说明：【布尔类型：true为开启，false关闭】，在【名称=值】之间/之后不要存在空格或者其他无关字符，【tick：20tick=1秒】\n");
             for (Map.Entry<String, ConfigItem> entry: wenscMap.entrySet()) {
                 ConfigItem value = entry.getValue();
                 fileWritter.write("// " + value.ConfigComment + "\n");
@@ -541,7 +540,7 @@ public class Configs {
     public static void generateShopConfigFile(File file) {
         try{
             FileWriter fileWritter = new FileWriter(file.getName());
-            fileWritter.write("// MITE-Extreme商店配置文件，说明：参数之间使用英文逗号分隔，请严格遵循格式（商品英文名=售出价格,购买价格），价格小于等于0代表不可出售或者不可购买，价格可以为小数，乱改造成无法启动概不负责\n");
+            fileWritter.write("// MITE-INNN商店配置文件，说明：参数之间使用英文逗号分隔，请严格遵循格式（商品英文名=售出价格,购买价格），价格小于等于0代表不可出售或者不可购买，价格可以为小数，乱改造成无法启动概不负责\n");
             for (Item item : Item.itemsList) {
                 if(item != null) {
                     if(item instanceof ItemBlock) {

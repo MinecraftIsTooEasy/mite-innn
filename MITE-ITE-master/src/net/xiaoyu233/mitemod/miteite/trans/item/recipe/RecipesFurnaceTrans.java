@@ -4,8 +4,14 @@ import net.minecraft.Block;
 import net.minecraft.ItemStack;
 import net.minecraft.RecipesFurnace;
 import net.minecraft.TileEntityFurnace;
+import net.xiaoyu233.mitemod.miteite.util.RecipeRegister;
+import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +20,15 @@ import java.util.Map;
 public class RecipesFurnaceTrans {
    @Shadow
    private final Map smeltingList = new HashMap();
+
+//   @Inject(method = "addSmelting", at = @At("RETURN"))
+//   private void test(int input_item_id, ItemStack output_item_stack, CallbackInfo callbackInfo){
+//      if (output_item_stack != null) {
+//         ItemStack inputItemStack = new ItemStack(input_item_id);
+//         double input = (double)inputItemStack.getItem().soldPriceArray.get(inputItemStack.getItemSubtype());
+//         output_item_stack.getItem().setSoldPrice(input + TileEntityFurnace.getHeatLevelRequired(input_item_id));
+//      }
+//   }
 
    public boolean doesSmeltingRecipeExistFor(ItemStack input_item_stack) {
       return this.smeltingList.get(input_item_stack.itemID) != null || input_item_stack.isBlock() && (input_item_stack.getItemAsBlock().getBlock().blockID == Block.blockIron.blockID || input_item_stack.getItemAsBlock().getBlock().blockID == Block.blockMithril.blockID);

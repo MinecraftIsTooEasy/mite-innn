@@ -23,9 +23,10 @@ public class RegisterHelper {
         // 当所有物品和方块注册完之后开始执行价格初始化
         registerPrice();
         Achievements.registerAchievements();
+
     }
 
-    public static void registerPrice() {
+    private static void registerPrice() {
         for (Item item: Item.itemsList) {
             if(item != null) {
                 if(item.getHasSubtypes()) {
@@ -42,6 +43,9 @@ public class RegisterHelper {
                 }
             }
         }
+//        Items.getItem(Blocks.direCrafting.blockID).setSoldPrice(1000D);
+        Items.doorVibranium.setSoldPrice(500D);
+
         Items.manure.setSoldPrice(0.1D);
         Items.seeds.setSoldPrice(0.1D);
         Items.sinew.setSoldPrice(0.1D);
