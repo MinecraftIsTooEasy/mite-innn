@@ -7,7 +7,6 @@ public class EnchantmentBeheading extends Enchantment {
         super(id, rarity, difficulty);
     }
 
-
     @Override
     public int getNumLevels() {
         return 5;

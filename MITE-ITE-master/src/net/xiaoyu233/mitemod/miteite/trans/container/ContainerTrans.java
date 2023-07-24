@@ -1,17 +1,11 @@
 package net.xiaoyu233.mitemod.miteite.trans.container;
 
 import net.minecraft.*;
-import net.xiaoyu233.mitemod.miteite.inventory.container.ContainerShop;
 import net.xiaoyu233.mitemod.miteite.inventory.container.SlotShop;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.*;
 
