@@ -13,29 +13,27 @@ public class RegisterINFRecipes {
     }
     private static void registerShapedRecipes(){
         ExtremeCraftingManager.getInstance().addRecipe(new ItemStack(Items.baublesDamageBoost),
-                "    A    ",
-                "   BCD   ",
-                "  BCECD  ",
-                " BCCFCCD ",
-                "GCKFIFJCG",
-                " BCCFCCD ",
-                "  BCLCD  ",
-                "   BCD   ",
-                "    R    ",
+                "         ",
+                "         ",
+                "  CCACC  ",
+                "  CKBFC  ",
+                "  DBLBE  ",
+                "  CGBKC  ",
+                "  CCRCC  ",
+                "         ",
+                "         ",
                 'A', Block.blockMithril,
                 'B', Item.ingotMithril,
                 'C', Item.redstone,
-                'D', Item.ingotAncientMetal,
-                'E', Items.voucherDoor,
-                'F', Block.glass,
                 //ZOMBIE
-                'G', new ItemStack(Item.skull, 1, 2),
+                'D', new ItemStack(Item.skull, 1, 2),
                 //Skeleton
-                'R', new ItemStack(Item.skull, 1, 1),
-                'K', Items.voucherZombieLord,
-                'J', Items.voucherAnnihilationSkeleton,
-                'L', Items.voucherExchanger,
-                'I', Items.itemDynamicCoreIron);
+                'E', new ItemStack(Item.skull, 1, 1),
+                'F', Items.voucherZombieLord,
+                'G', Items.voucherAnnihilationSkeleton,
+                'K', Items.voucherExchanger,
+                'L', Items.itemDynamicCoreIron,
+                'R', Block.blockAncientMetal);
     }
 
     public static void registerALLRecipes(){

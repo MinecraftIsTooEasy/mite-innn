@@ -9,53 +9,34 @@ import java.util.*;
 
 public class EntityZombieBoss extends EntityZombie {
     private Enchantment[] enhanceSpecialBookList = new Enchantment[]{Enchantment.protection, Enchantment.sharpness, Enchantment.fortune, Enchantment.harvesting, Enchantments.EXTEND, Enchantment.efficiency, Enchantment.vampiric, Enchantment.butchering, Enchantment.featherFalling, Enchantment.smite, Enchantment.unbreaking, Enchantment.arrow_recovery, Enchantment.looting, Enchantment.knockback, Enchantment.aquaAffinity, Enchantment.flame, Enchantment.power, Enchantment.silkTouch, Enchantment.endurance, Enchantment.baneOfArthropods, Enchantment.regeneration, Enchantment.thorns, Enchantment.true_flight, Enchantment.speed, Enchantment.stun, Enchantment.fishing_fortune, Enchantment.fireProtection, Enchantment.blastProtection, Enchantment.projectileProtection, Enchantment.free_action, Enchantment.quickness, Enchantment.punch};
-    private Enchantment[] nonLevelsBookList = new Enchantment[]{Enchantments.enchantmentFixed, Enchantments.enchantmentChain, Enchantments.EMERGENCY, Enchantments.enchantmentForge};
+    private Enchantment[] nonLevelsBookList = new Enchantment[]{Enchantments.enchantmentFixed, Enchantments.enchantmentChain, Enchantments.EMERGENCY};
     private int thunderTick = 0;
     private int attackedCounter = 200;
-    public Map<String, Float> attackDamageMap = new HashMap<>();
+    public Map<String, Float> attackDamageMap = new HashMap<String, Float>();
 
     public EntityZombieBoss(World par1World) {
         super(par1World);
     }
 
     protected void addRandomEquipment() {
-        this.setCurrentItemOrArmor(0, new ItemStack(Items.VIBRANIUM_WAR_HAMMER, 1).randomizeForMob(this, true));
-        this.setCurrentItemOrArmor(1, new ItemStack(Items.VIBRANIUM_HELMET, 1).randomizeForMob(this, true));
-        this.setCurrentItemOrArmor(2, new ItemStack(Items.VIBRANIUM_CHESTPLATE, 1).randomizeForMob(this, true));
-        this.setCurrentItemOrArmor(3, new ItemStack(Items.VIBRANIUM_LEGGINGS, 1).randomizeForMob(this, true));
-        this.setCurrentItemOrArmor(4, new ItemStack(Items.VIBRANIUM_BOOTS, 1).randomizeForMob(this, true));
-        this.addPotionEffect(new MobEffect(1, 2147483647, 0));
-        this.addPotionEffect(new MobEffect(5, 2147483647, 0));
+        this.setCurrentItemOrArmor(0, new ItemStack((Item)Items.VIBRANIUM_WAR_HAMMER, 1).randomizeForMob((EntityInsentient)this, true));
+        this.setCurrentItemOrArmor(1, new ItemStack((Item)Items.VIBRANIUM_HELMET, 1).randomizeForMob((EntityInsentient)this, true));
+        this.setCurrentItemOrArmor(2, new ItemStack((Item)Items.VIBRANIUM_CHESTPLATE, 1).randomizeForMob((EntityInsentient)this, true));
+        this.setCurrentItemOrArmor(3, new ItemStack((Item)Items.VIBRANIUM_LEGGINGS, 1).randomizeForMob((EntityInsentient)this, true));
+        this.setCurrentItemOrArmor(4, new ItemStack((Item)Items.VIBRANIUM_BOOTS, 1).randomizeForMob((EntityInsentient)this, true));
+        this.addPotionEffect(new MobEffect(1, Integer.MAX_VALUE, 0));
+        this.addPotionEffect(new MobEffect(5, Integer.MAX_VALUE, 0));
     }
 
     public void addPotionEffect(MobEffect par1PotionEffect) {
-        if(par1PotionEffect.getPotionID() == 1 || par1PotionEffect.getPotionID() == 5) {
+        if (par1PotionEffect.getPotionID() == 1 || par1PotionEffect.getPotionID() == 5) {
             super.addPotionEffect(par1PotionEffect);
         }
     }
 
-    public void getEnchantBookDependsOnDamageRate(EntityPlayer entityPlayer, int rate) {
-        ItemStack var11 = null;
-        Enchantment dropEnchantment = Enchantment.enchantmentsList[rand.nextInt(Enchantment.enchantmentsList.length)];
-        if(dropEnchantment != null) {
-            if(dropEnchantment.getNumLevelsForVibranium() > 1) {
-                var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, Math.min(rate, dropEnchantment.getNumLevelsForVibranium())));
-            } else {
-                if(rate >= 7) {
-                    var11 = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, 1));
-                } else {
-                    getEnchantBookDependsOnDamageRate(entityPlayer, rate);
-                }
-            }
-        } else {
-            getEnchantBookDependsOnDamageRate(entityPlayer, rate);
-        }
-        entityPlayer.inventory.addItemStackToInventoryOrDropIt(var11);
-    }
-
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player) {
-            Enchantment dropEnchantment;
+            ItemStack stack;
             this.broadcastDamage("僵尸BOSS挑战成功");
             MinecraftServer server = MinecraftServer.F();
             for (Object o : server.getConfigurationManager().playerEntityList) {
@@ -64,38 +45,36 @@ public class EntityZombieBoss extends EntityZombie {
                 if (!this.attackDamageMap.containsKey(player.getEntityName()) || (nums = Math.round(this.attackDamageMap.get(player.getEntityName()).floatValue()) / 10) <= 0) continue;
                 this.dropItemStack(new ItemStack(Item.diamond, nums));
             }
-
             float percent = (float)this.nonLevelsBookList.length / ((float)this.enhanceSpecialBookList.length + (float)this.nonLevelsBookList.length);
             if (this.rand.nextFloat() < percent && this.rand.nextInt(5) == 0) {
-                dropEnchantment = this.nonLevelsBookList[this.rand.nextInt(this.nonLevelsBookList.length)];
-                ItemStack stack = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
+                Enchantment dropEnchantment = this.nonLevelsBookList[this.rand.nextInt(this.nonLevelsBookList.length)];
+                stack = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
                 if (this.rand.nextInt(2) == 0) {
                     this.dropItemStack(stack);
                 }
                 return;
             }
-            dropEnchantment = this.enhanceSpecialBookList[this.rand.nextInt(this.enhanceSpecialBookList.length)];
-            ItemStack stack = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
+            Enchantment dropEnchantment = this.enhanceSpecialBookList[this.rand.nextInt(this.enhanceSpecialBookList.length)];
+            stack = Item.enchantedBook.getEnchantedItemStack(new EnchantmentInstance(dropEnchantment, dropEnchantment.getNumLevelsForVibranium()));
             if (this.rand.nextInt(2) == 0) {
                 this.dropItemStack(stack);
             }
         }
+//        this.dropItemStack(new ItemStack(Items.voucherZombieBoss, 1));
     }
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        int rate = Math.min(200, worldObj.getDayOfOverworld()) / 20;
+        int rate = Math.min(200, this.worldObj.getDayOfOverworld()) / 20;
         this.setEntityAttribute(GenericAttributes.attackDamage, 6 + rate * 2);
-        this.setEntityAttribute(GenericAttributes.maxHealth, 20 + rate * 100);
-        this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3D);
+        this.setEntityAttribute(GenericAttributes.maxHealth, 20 + rate * 20);
+        this.setEntityAttribute(GenericAttributes.movementSpeed, 0.3);
     }
 
-    @Override
     protected void tryDamageArmor(DamageSource damage_source, float amount, EntityDamageResult result) {
     }
 
-    public boolean isComfortableInLava()
-    {
+    public boolean isComfortableInLava() {
         return true;
     }
 
@@ -103,12 +82,10 @@ public class EntityZombieBoss extends EntityZombie {
         return true;
     }
 
-    @Override
     public boolean handleLavaMovement() {
         return false;
     }
 
-    @Override
     public boolean handleWaterMovement() {
         return false;
     }
@@ -125,8 +102,6 @@ public class EntityZombieBoss extends EntityZombie {
         return false;
     }
 
-
-    @Override
     public boolean canNeverPickUpItem(Item item) {
         return true;
     }
@@ -135,61 +110,51 @@ public class EntityZombieBoss extends EntityZombie {
         return false;
     }
 
-    @Override
     public EntityDamageResult attackEntityFrom(Damage damage) {
-        if(damage.getSource().damageType.equals("player") || damage.getSource().damageType.equals("mob")) {
-            if(damage.getSource().getResponsibleEntity() instanceof EntityPlayer) {
-                EntityPlayer player = ((EntityPlayer) damage.getSource().getResponsibleEntity());
+        if (damage.getSource().damageType.equals("player") || damage.getSource().damageType.equals("mob")) {
+            if (damage.getSource().getResponsibleEntity() instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer)damage.getSource().getResponsibleEntity();
                 player.removePotionEffect(MobEffectList.damageBoost.id);
                 player.bossResetDamageBoostCounter = 200;
                 this.attackedCounter = 200;
-                damage.setAmount(damage.getAmount() / 5);
+                damage.setAmount(damage.getAmount() / 5.0f);
                 EntityDamageResult originDamage = super.attackEntityFrom(damage);
                 try {
-                    if(attackDamageMap.containsKey(player.getEntityName())) {
-                        attackDamageMap.put(player.getEntityName(), attackDamageMap.get(player.getEntityName()) + originDamage.getAmountOfHealthLost());
+                    if (this.attackDamageMap.containsKey(player.getEntityName())) {
+                        this.attackDamageMap.put(player.getEntityName(), Float.valueOf(this.attackDamageMap.get(player.getEntityName()).floatValue() + originDamage.getAmountOfHealthLost()));
                     } else {
-                        attackDamageMap.put(player.getEntityName(), originDamage.getAmountOfHealthLost());
+                        this.attackDamageMap.put(player.getEntityName(), Float.valueOf(originDamage.getAmountOfHealthLost()));
                     }
-                } catch (Exception e) {
-                    Minecraft.setErrorMessage("BOSS伤害计算错误分析");
-                    Minecraft.setErrorMessage(e.getMessage());
+                }
+                catch (Exception e) {
+                    Minecraft.setErrorMessage((String)"BOSS伤害计算错误分析");
+                    Minecraft.setErrorMessage((String)e.getMessage());
                 }
                 return originDamage;
             }
             return null;
-        } else {
-            return null;
         }
+        return null;
     }
-
 
     public void broadcastDamage(String stateMessage) {
         MinecraftServer server = MinecraftServer.F();
         Iterator var4 = server.getConfigurationManager().playerEntityList.iterator();
-
-        List<Map.Entry<String,Float>> list = new ArrayList<>(attackDamageMap.entrySet());
-        Collections.sort(list, (e1, e2) -> (int) Math.floor(e2.getValue() - e1.getValue()));
-        while(var4.hasNext()) {
+        ArrayList<Map.Entry<String, Float>> list = new ArrayList<Map.Entry<String, Float>>(this.attackDamageMap.entrySet());
+        Collections.sort(list, (e1, e2) -> (int)Math.floor(((Float)e2.getValue()).floatValue() - ((Float)e1.getValue()).floatValue()));
+        while (var4.hasNext()) {
             Object o = var4.next();
             EntityPlayer player = (EntityPlayer)o;
-            for(int i = 0; i < Math.min(list.size(), 5); i++) {
-                player.sendChatToPlayer(ChatMessage.createFromText("--" + stateMessage + "-伤害排名--"));
-                player.sendChatToPlayer(ChatMessage.createFromText("第")
-                        .appendComponent(ChatMessage.createFromText("§6" + (i + 1)))
-                        .appendComponent(ChatMessage.createFromText("§r名: "))
-                        .appendComponent(ChatMessage.createFromText("§n" + list.get(i).getKey()))
-                        .appendComponent(ChatMessage.createFromText("§r - "))
-                        .appendComponent(ChatMessage.createFromText("§b" + String.format("%.2f", list.get(i).getValue())))
-                        .appendComponent(ChatMessage.createFromText("§r点伤害")));
+            for (int i = 0; i < Math.min(list.size(), 5); ++i) {
+                player.sendChatToPlayer(ChatMessage.createFromText((String)("--" + stateMessage + "-伤害排名--")));
+                player.sendChatToPlayer(ChatMessage.createFromText((String)"第").appendComponent(ChatMessage.createFromText((String)("§6" + (i + 1)))).appendComponent(ChatMessage.createFromText((String)"§r名: ")).appendComponent(ChatMessage.createFromText((String)("§n" + (String)((Map.Entry)list.get(i)).getKey()))).appendComponent(ChatMessage.createFromText((String)"§r - ")).appendComponent(ChatMessage.createFromText((String)("§b" + String.format("%.2f", ((Map.Entry)list.get(i)).getValue())))).appendComponent(ChatMessage.createFromText((String)"§r点伤害")));
             }
         }
     }
 
-    @Override
     public EntityDamageResult attackEntityAsMob(Entity target) {
-        if(target instanceof EntityPlayer) {
-            ((EntityPlayer) target).isAttackByBossCounter = 30;
+        if (target instanceof EntityPlayer) {
+            ((EntityPlayer)target).isAttackByBossCounter = 30;
         }
         return super.attackEntityAsMob(target);
     }
@@ -198,15 +163,14 @@ public class EntityZombieBoss extends EntityZombie {
         super.writeEntityToNBT(par1NBTTagCompound);
         par1NBTTagCompound.setShort("attackedCounter", (short)this.attackedCounter);
         par1NBTTagCompound.setShort("thunderTick", (short)this.thunderTick);
-
         NBTTagList nbtTagList = new NBTTagList();
         for (Map.Entry<String, Float> integerEntry : this.attackDamageMap.entrySet()) {
             NBTTagCompound compound = new NBTTagCompound();
-            compound.setString("Attacker", (integerEntry).getKey());
-            compound.setFloat("Damage", (integerEntry).getValue());
-            nbtTagList.appendTag(compound);
+            compound.setString("Attacker", integerEntry.getKey());
+            compound.setFloat("Damage", integerEntry.getValue().floatValue());
+            nbtTagList.appendTag((NBTBase)compound);
         }
-        par1NBTTagCompound.setTag("AttackDamageMap", nbtTagList);
+        par1NBTTagCompound.setTag("AttackDamageMap", (NBTBase)nbtTagList);
     }
 
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound) {
@@ -216,36 +180,33 @@ public class EntityZombieBoss extends EntityZombie {
         if (par1NBTTagCompound.hasKey("AttackDamageMap")) {
             NBTTagList attackCountMap = par1NBTTagCompound.getTagList("AttackDamageMap");
             int count = attackCountMap.tagCount();
-
-            for(int i = 0; i < count; ++i) {
+            for (int i = 0; i < count; ++i) {
                 NBTTagCompound a = (NBTTagCompound)attackCountMap.tagAt(i);
-                this.attackDamageMap.put(a.getString("Attacker"), a.getFloat("Damage"));
+                this.attackDamageMap.put(a.getString("Attacker"), Float.valueOf(a.getFloat("Damage")));
             }
         }
     }
 
     public void addThunderAttack(EntityPlayer player, float damage) {
-        if(player != null) {
+        if (player != null) {
             WorldServer var20 = (WorldServer)this.worldObj;
-            var20.addWeatherEffect(new EntityLightning(var20, player.posX, player.posY, player.posZ));
+            var20.addWeatherEffect((Entity)new EntityLightning((World)var20, player.posX, player.posY, player.posZ));
             player.attackEntityFrom(new Damage(DamageSource.divine_lightning, damage));
         }
     }
 
     public boolean setSurroundingPlayersAsTarget() {
-        List entities = Arrays.asList(this.getNearbyEntities(16, 16).stream().filter(entity -> entity instanceof EntityPlayer && !((EntityPlayer) entity).isPlayerInCreative()).toArray());
-        if(entities.size() > 0) {
-            Object targetPlayer = entities.get(rand.nextInt(entities.size()));
-            if(targetPlayer instanceof EntityPlayer) {
-                this.setTarget((EntityPlayer)targetPlayer);
-                return true;
-            }
+        Object targetPlayer;
+        List<Object> entities = Arrays.asList(this.getNearbyEntities(16.0f, 16.0f).stream().filter(entity -> entity instanceof EntityPlayer && !((EntityPlayer)entity).isPlayerInCreative()).toArray());
+        if (entities.size() > 0 && (targetPlayer = entities.get(this.rand.nextInt(entities.size()))) instanceof EntityPlayer) {
+            this.setTarget((EntityLiving)((EntityPlayer)targetPlayer));
+            return true;
         }
         return false;
     }
 
     public void healAndBroadcast() {
-        if(this.getHealth() < this.getMaxHealth()) {
+        if (this.getHealth() < this.getMaxHealth()) {
             this.heal(this.getMaxHealth());
             this.broadcastDamage("僵尸BOSS挑战失败");
             this.attackDamageMap.clear();
@@ -254,26 +215,27 @@ public class EntityZombieBoss extends EntityZombie {
 
     public void onUpdate() {
         super.onUpdate();
-        if (!this.getWorld().isRemote){
-            thunderTick ++;
-            if(attackedCounter <= 0) {
+        if (!this.getWorld().isRemote) {
+            ++this.thunderTick;
+            if (this.attackedCounter <= 0) {
                 this.healAndBroadcast();
             } else {
-                attackedCounter --;
+                --this.attackedCounter;
             }
             EntityLiving target = this.getTarget();
-            if(!(target instanceof EntityPlayer)) {
+            if (!(target instanceof EntityPlayer)) {
                 this.healAndBroadcast();
             }
-            if(thunderTick % 20 == 0) {
-                if(target != null && target instanceof EntityPlayer) {
-                    if(((EntityPlayer) target).isAttackByBossCounter <= 0) {
-                        addThunderAttack((EntityPlayer)target, 10f);
+            if (this.thunderTick % 20 == 0) {
+                if (target != null && target instanceof EntityPlayer && ((EntityPlayer)target).isAttackByBossCounter <= 0) {
+                    this.addThunderAttack((EntityPlayer)target, 10.0f);
+                    if (this.rand.nextInt(9) == 0) {
+                        this.setDead();
                     }
                 }
-                if(thunderTick == 60) {
+                if (this.thunderTick == 60) {
                     this.setSurroundingPlayersAsTarget();
-                    thunderTick = 0;
+                    this.thunderTick = 0;
                 }
             }
         }

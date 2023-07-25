@@ -1,8 +1,10 @@
 package net.xiaoyu233.mitemod.miteite.trans.network;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteinnn.block.tileentity.TileEntityDireCrafting;
 import net.xiaoyu233.mitemod.miteite.inventory.container.ForgingTableSlots;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -146,7 +148,16 @@ public class PacketOpenWindowTrans {
          } else if (this.inventoryType == 16) {
             player.displayGUIShop();
             player.openContainer.windowId = this.windowId;
-         }else {
+         } else if (this.inventoryType == 17) {
+            TileEntityDireCrafting tileEntityDireCrafting = (TileEntityDireCrafting)tile_entity;
+
+            if (this.useProvidedWindowTitle) {
+               tileEntityDireCrafting.setCustomInvName(this.windowTitle);
+            }
+
+            player.displayGUIExtremeCrafting(world, this.x, this.y, this.z, tileEntityDireCrafting);
+            player.openContainer.windowId = this.windowId;
+         } else {
             Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.inventoryType);
          }
       }
@@ -163,6 +174,10 @@ public class PacketOpenWindowTrans {
    public boolean hasTileEntity() {
       return false;
    }
+
+   @Shadow @Final public static int TYPE_ANVIL;
+
+   @Shadow @Final public static int TYPE_BEACON;
 
    @Overwrite
    public void readPacketData(DataInput par1DataInput) throws IOException {

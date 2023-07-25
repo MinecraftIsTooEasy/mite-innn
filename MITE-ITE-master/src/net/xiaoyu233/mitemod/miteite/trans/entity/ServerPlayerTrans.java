@@ -3,6 +3,8 @@ package net.xiaoyu233.mitemod.miteite.trans.entity;
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
 import net.xiaoyu233.fml.util.ReflectHelper;
+import net.xiaoyu233.mitemod.miteinnn.block.gui.container.ContainerExtremeCrafting;
+import net.xiaoyu233.mitemod.miteinnn.block.tileentity.TileEntityDireCrafting;
 import net.xiaoyu233.mitemod.miteite.inventory.container.*;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
@@ -119,6 +121,15 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
         {
             var7.printStackTrace();
         }
+    }
+
+    public void displayGUIExtremeCrafting(World world, int x, int y, int z, TileEntityDireCrafting tileEntityDireCrafting) {
+        this.getNextWindowId();
+//        System.out.println("SERVERPLAYER");
+        this.playerNetServerHandler.sendPacket((new Packet100OpenWindow(this.currentWindowId, 17, tileEntityDireCrafting.getCustomNameOrUnlocalized(), tileEntityDireCrafting.getSizeInventory(), tileEntityDireCrafting.hasCustomName())).setCoords(tileEntityDireCrafting));
+        this.openContainer = new ContainerExtremeCrafting(this, world, x, y, z, tileEntityDireCrafting);
+        this.openContainer.windowId = this.currentWindowId;
+        this.openContainer.onCraftGuiOpened(this);
     }
 
    @Override
