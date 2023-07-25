@@ -1,6 +1,7 @@
 package net.xiaoyu233.mitemod.miteite.trans.entity;
 
 import net.minecraft.*;
+import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
 import net.xiaoyu233.mitemod.miteite.entity.EntityWanderingWitch;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -66,6 +67,7 @@ public class EntityBatTrans extends EntityAmbient {
         } else if (this.riddenByEntity == null && item_stack == null) {
             if (player.onServer()) {
                 player.mountEntity(this);
+                player.triggerAchievement(Achievements.rideBat);
             }
             return true;
         } else {

@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.entity;
 
 import net.minecraft.*;
 import net.minecraft.server.MinecraftServer;
+import net.xiaoyu233.mitemod.miteite.achievement.Achievements;
 import net.xiaoyu233.mitemod.miteite.item.Items;
 import net.xiaoyu233.mitemod.miteite.item.enchantment.Enchantments;
 
@@ -42,6 +43,7 @@ public class EntityZombieBoss extends EntityZombie {
             for (Object o : server.getConfigurationManager().playerEntityList) {
                 int nums;
                 EntityPlayer player = (EntityPlayer)o;
+                player.triggerAchievement(Achievements.killZombieBoss);
                 if (!this.attackDamageMap.containsKey(player.getEntityName()) || (nums = Math.round(this.attackDamageMap.get(player.getEntityName()).floatValue()) / 10) <= 0) continue;
                 this.dropItemStack(new ItemStack(Item.diamond, nums));
             }

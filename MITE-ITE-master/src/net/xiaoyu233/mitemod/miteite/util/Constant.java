@@ -9,7 +9,7 @@ import java.util.Random;
 public class Constant {
     public static final double[] ENHANCE_FACTORS;
     public static final bjo icons_ite = new bjo("textures/gui/icons_ite.png");
-    public static final String MITE_ITE_VERSION = "0.3.0-BETA";
+    public static final String MITE_ITE_VERSION = "0.3.1-BETA";
     public static final int MITE_ITE_VER_NUM = 114514;
     public static final bjo RES_VIBRANIUM_SINGLE = new bjo("textures/entity/chest/vibranium_single.png");
     public static int nextItemID = 2024;
@@ -28,7 +28,7 @@ public class Constant {
     static {
         ENHANCE_FACTORS = new double[Short.MAX_VALUE];
         for (int i = 0, enhance_factorsLength = ENHANCE_FACTORS.length; i < enhance_factorsLength; i++) {
-            ENHANCE_FACTORS[i] = Math.pow(1.028,i*2.28) - 1;
+            ENHANCE_FACTORS[i] = Math.pow(1.028, i*2.28) - 1;
         }
     }
 
