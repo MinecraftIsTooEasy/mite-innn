@@ -1,9 +1,6 @@
 package net.xiaoyu233.mitemod.miteite.render.entity;
 
-import net.minecraft.Entity;
-import net.minecraft.EntityLiving;
-import net.minecraft.bhe;
-import net.minecraft.bjo;
+import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.entity.EntityAncientDragon;
 import net.xiaoyu233.mitemod.miteite.render.entity.model.ModelAncientDragon;
 import org.lwjgl.opengl.GL11;
@@ -13,7 +10,8 @@ public class RenderAncientDragon extends bhe {
         super(new ModelAncientDragon(), 3.0F);
     }
 
-    protected void a(EntityAncientDragon par1EntityGiantZombie) {
+    protected void a(EntityAncientDragon ancientDragon) {
+//        bez.a(ancientDragon, true);
         GL11.glScalef(13.5F, 13.5F, 13.5F);
     }
 

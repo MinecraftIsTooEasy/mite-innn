@@ -1,6 +1,12 @@
 # MITE-INNN更新日志
 
 
+## 0.3.3-BETA
+### 其他
+* 同步至mite-extreme-v0.1.5.6
+
+---
+
 ## 0.3.2-BETA
 ### 其他
 * 同步至mite-extreme-v0.1.5.5
