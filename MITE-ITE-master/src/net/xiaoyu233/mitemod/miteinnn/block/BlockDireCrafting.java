@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteinnn.block;
 
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteinnn.block.tileentity.TileEntityDireCrafting;
+import net.xiaoyu233.mitemod.miteite.tileentity.TileEntityGemSetting;
 
 import java.util.Random;
 
@@ -16,6 +17,17 @@ public class BlockDireCrafting extends Block implements IContainer {
         this.setMinHarvestLevel(5);
         this.setMaxStackSize(1);
         this.setCreativeTab(CreativeModeTab.tabDecorations);
+    }
+
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, EnumFace face, float offset_x, float offset_y, float offset_z) {
+        if (player.onServer() && world.isAirOrPassableBlock(x, y + 1, z, false)) {
+            TileEntityDireCrafting tile_entity = (TileEntityDireCrafting) world.getBlockTileEntity(x, y, z);
+            if(tile_entity != null) {
+                player.displayGUIExtremeCrafting(tile_entity);
+            }
+        }
+        return true;
     }
 
     @Override
@@ -56,6 +68,7 @@ public class BlockDireCrafting extends Block implements IContainer {
             }
         }
         super.breakBlock(world, x, y, z, block_id, meta);
+        world.removeBlockTileEntity(x, y, z);
     }
 
     @Override
@@ -77,15 +90,5 @@ public class BlockDireCrafting extends Block implements IContainer {
         top = mt.a("avaritia/dire_crafting_top");
         sides = mt.a("avaritia/dire_crafting_side");
         bottom = mt.a("avaritia/block_crystal_matrix");
-    }
-
-    @Override
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, EnumFace face, float offset_x, float offset_y, float offset_z) {
-        if (player.onServer() && world.isAirOrPassableBlock(x, y + 1, z, false)) {
-            TileEntityDireCrafting tile_entity = (TileEntityDireCrafting) world.getBlockTileEntity(x, y, z);
-//            System.out.println(tile_entity);
-            player.displayGUIExtremeCrafting(world, x, y, z, tile_entity);
-        }
-        return true;
     }
 }

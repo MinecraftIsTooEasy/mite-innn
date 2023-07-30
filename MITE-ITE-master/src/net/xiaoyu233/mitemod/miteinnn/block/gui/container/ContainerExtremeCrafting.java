@@ -16,12 +16,14 @@ public class ContainerExtremeCrafting extends Container {
     private int posY;
     private int posZ;
 
-    public ContainerExtremeCrafting(EntityPlayer player, World world, int x, int y, int z, TileEntityDireCrafting table) {
+    public ContainerExtremeCrafting(EntityPlayer player, TileEntityDireCrafting table) {
         super(player);
-        this.worldObj = world;
-        this.posX = x;
-        this.posY = y;
-        this.posZ = z;
+        this.worldObj = table.getWorldObj();
+        this.posX = table.xCoord;
+        this.posY = table.yCoord;
+        this.posZ = table.zCoord;
+//        System.out.println("ContainerExtremeCrafting ；" + table);
+//        System.out.println("ContainerExtremeCrafting");
         craftMatrix = new InventoryDireCrafting(this, table);
         craftResult = new InventoryDireCraftResult(table);
         this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 210, 80));

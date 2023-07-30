@@ -769,7 +769,7 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
 
    public void displayGUIGemSetting(TileEntityGemSetting par1TileEntityFurnace) {
    }
-   public void displayGUIExtremeCrafting(World world, int x, int y, int z, TileEntityDireCrafting tileEntityDireCrafting) {
+   public void displayGUIExtremeCrafting(TileEntityDireCrafting tileEntityDireCrafting) {
    }
 
    public void displayGUIShop() {}

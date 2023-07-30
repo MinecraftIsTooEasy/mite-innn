@@ -123,11 +123,11 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
         }
     }
 
-    public void displayGUIExtremeCrafting(World world, int x, int y, int z, TileEntityDireCrafting tileEntityDireCrafting) {
+    public void displayGUIExtremeCrafting(TileEntityDireCrafting tileEntityDireCrafting) {
+//        System.out.println("Server play" + tileEntityDireCrafting);
         this.getNextWindowId();
-//        System.out.println("SERVERPLAYER");
         this.playerNetServerHandler.sendPacket((new Packet100OpenWindow(this.currentWindowId, 17, tileEntityDireCrafting.getCustomNameOrUnlocalized(), tileEntityDireCrafting.getSizeInventory(), tileEntityDireCrafting.hasCustomName())).setCoords(tileEntityDireCrafting));
-        this.openContainer = new ContainerExtremeCrafting(this, world, x, y, z, tileEntityDireCrafting);
+        this.openContainer = new ContainerExtremeCrafting(this, tileEntityDireCrafting);
         this.openContainer.windowId = this.currentWindowId;
         this.openContainer.onCraftGuiOpened(this);
     }

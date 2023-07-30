@@ -10,8 +10,8 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiExtremeCrafting extends awy {
     private static final bjo tex = new bjo("textures/gui/avaritia/dire_crafting_gui.png");
-    public GuiExtremeCrafting(EntityPlayer par1InventoryPlayer, World par2World, int x, int y, int z, TileEntityDireCrafting table) {
-        super(new ContainerExtremeCrafting(par1InventoryPlayer, par2World, x, y, z, table));
+    public GuiExtremeCrafting(EntityPlayer par1InventoryPlayer, TileEntityDireCrafting table) {
+        super(new ContainerExtremeCrafting(par1InventoryPlayer, table));
         this.c = 256;
         this.d = 256;
     }

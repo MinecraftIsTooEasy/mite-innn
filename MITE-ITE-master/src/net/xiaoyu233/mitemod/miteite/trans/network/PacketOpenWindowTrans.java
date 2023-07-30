@@ -143,19 +143,24 @@ public class PacketOpenWindowTrans {
                var3x.setCustomInvName(this.windowTitle);
             }
 
+//            System.out.println("packer ： " + var3x);
+
             player.displayGUIGemSetting(var3x);
             player.openContainer.windowId = this.windowId;
          } else if (this.inventoryType == 16) {
             player.displayGUIShop();
             player.openContainer.windowId = this.windowId;
          } else if (this.inventoryType == 17) {
-            TileEntityDireCrafting tileEntityDireCrafting = (TileEntityDireCrafting)tile_entity;
+//            System.out.println(tile_entity);
+            TileEntityDireCrafting tileEntityDireCrafting = (TileEntityDireCrafting) tile_entity;
 
             if (this.useProvidedWindowTitle) {
                tileEntityDireCrafting.setCustomInvName(this.windowTitle);
             }
 
-            player.displayGUIExtremeCrafting(world, this.x, this.y, this.z, tileEntityDireCrafting);
+//            System.out.println("packer ： " + tileEntityDireCrafting);
+
+            player.displayGUIExtremeCrafting(tileEntityDireCrafting);
             player.openContainer.windowId = this.windowId;
          } else {
             Minecraft.setErrorMessage("handleOpenWindow: type not handled " + this.inventoryType);
@@ -165,9 +170,8 @@ public class PacketOpenWindowTrans {
    }
 
    @Overwrite
-   public boolean hasCoords()
-   {
-      return this.inventoryType == 0 || this.inventoryType == 1 || this.inventoryType == 2 || this.inventoryType == 3 || this.inventoryType == 4 || this.inventoryType == 5 || this.inventoryType == 7 || this.inventoryType == 8 || this.inventoryType == 9 || this.inventoryType == 10 || this.inventoryType == 15;
+   public boolean hasCoords() {
+      return this.inventoryType == 0 || this.inventoryType == 1 || this.inventoryType == 2 || this.inventoryType == 3 || this.inventoryType == 4 || this.inventoryType == 5 || this.inventoryType == 7 || this.inventoryType == 8 || this.inventoryType == 9 || this.inventoryType == 10 || this.inventoryType == 15  || this.inventoryType == 17;
    }
 
    @Shadow

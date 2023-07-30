@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class TileEntityDireCrafting extends TileEntity implements IInventory {
     private ItemStack result;
-    private ItemStack[] matrix = new ItemStack[81];
+    private final ItemStack[] matrix = new ItemStack[81];
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
@@ -42,17 +42,19 @@ public class TileEntityDireCrafting extends TileEntity implements IInventory {
 
     @Override
     public int getSizeInventory() {
-        return 82;
+        return matrix.length;
     }
 
     @Override
     public ItemStack getStackInSlot(int slot){
-        if(slot == 0)
+        if(slot == 0){
             return result;
-        else if(slot <= matrix.length)
+        } else if(slot <= matrix.length){
             return matrix[slot - 1];
-        else
+        } else {
             return null;
+        }
+
     }
 
     @Override
@@ -93,9 +95,9 @@ public class TileEntityDireCrafting extends TileEntity implements IInventory {
     @Override
     public ItemStack getStackInSlotOnClosing(int par1) {
         if (this.matrix[par1] != null) {
-            ItemStack var2 = this.matrix[par1];
+            ItemStack stack = this.matrix[par1];
             this.matrix[par1] = null;
-            return var2;
+            return stack;
         } else {
             return null;
         }
@@ -105,8 +107,7 @@ public class TileEntityDireCrafting extends TileEntity implements IInventory {
     public void setInventorySlotContents(int slot, ItemStack stack){
         if(slot == 0){
             result = stack;
-        }
-        else if(slot <= matrix.length){
+        } else if(slot <= matrix.length){
             matrix[slot - 1] = stack;
         }
     }

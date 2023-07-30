@@ -10,8 +10,9 @@ public class InventoryDireCrafting extends InventoryCrafting {
     private Container container;
     public InventoryDireCrafting(Container cont, TileEntityDireCrafting table) {
         super(cont, 9, 9);
-        craft = table;
         container = cont;
+        craft = table;
+//        System.out.println("InventoryDireCrafting");
     }
 
     @Override
@@ -20,13 +21,16 @@ public class InventoryDireCrafting extends InventoryCrafting {
     }
 
     @Override
+    public int getSizeInventory() {
+        return craft.getSizeInventory();
+    }
+
+    @Override
     public ItemStack getStackInRowAndColumn (int row, int column) {
         if (row >= 0 && row < 9) {
             int x = row + column * 9;
             return this.getStackInSlot(x);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }

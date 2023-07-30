@@ -49,6 +49,7 @@ public abstract class ClientPlayerTrans extends beu {
    }
 
    public void displayGUIGemSetting(TileEntityGemSetting tileEntityGemSetting) {
+//      System.out.println("ClientPLAYER ；" +tileEntityGemSetting);
       this.d.a(new GuiGemSetting(this, tileEntityGemSetting));
    }
 
@@ -57,9 +58,10 @@ public abstract class ClientPlayerTrans extends beu {
       this.d.a(new GuiShop(this));
    }
 
-   public void displayGUIExtremeCrafting(World world, int x, int y, int z,TileEntityDireCrafting tileEntityDireCrafting) {
+   public void displayGUIExtremeCrafting(TileEntityDireCrafting tileEntityDireCrafting) {
 //      System.out.println("ClientPLAYER");
-      this.d.a(new GuiExtremeCrafting(this, world, x, y, z, tileEntityDireCrafting));
+//      System.out.println("ClientPLAYER ；" + tileEntityDireCrafting);
+      this.d.a(new GuiExtremeCrafting(this, tileEntityDireCrafting));
    }
 
    @Overwrite
