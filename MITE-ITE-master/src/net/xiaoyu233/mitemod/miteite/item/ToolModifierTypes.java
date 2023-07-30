@@ -40,7 +40,7 @@ public enum ToolModifierTypes implements ItemModifierTypes{
     LAST_STAND(0.67F,"不破之盾",EnumChatFormat.YELLOW,1, (stack -> true),3),
     NATURE_BLESSING(0.125f,"自然祝福",EnumChatFormat.GREEN,1, ToolModifierTypes::isWeapon, 4),
     APOCALYPSE(1.0f,"天启",EnumChatFormat.DARK_RED,2, ToolModifierTypes::isWeapon, 4),
-    BEHEADING_MODIFIER(0.1f, "斩首" , EnumChatFormat.DARK_GREEN,50, ToolModifierTypes::isBeheading, 5);
+    BEHEADING_MODIFIER(0.1f, "斩首" , EnumChatFormat.DARK_GREEN,50, ToolModifierTypes::isBeheading, 1);
     // itemlevel addAttrA BEHEADING_MODIFIER 1
     public final String nbtName;
     public final float levelAddition;

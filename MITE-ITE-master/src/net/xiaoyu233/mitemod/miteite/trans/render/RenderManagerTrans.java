@@ -5,9 +5,11 @@ import net.minecraft.bgl;
 import net.minecraft.bgm;
 import net.xiaoyu233.mitemod.miteite.entity.EntityAncientDragon;
 import net.xiaoyu233.mitemod.miteite.entity.EntityAnnihilationSkeleton;
+import net.xiaoyu233.mitemod.miteite.entity.EntitySpiderQueen;
 import net.xiaoyu233.mitemod.miteite.entity.EntityWanderingWitch;
 import net.xiaoyu233.mitemod.miteite.render.entity.RenderAncientDragon;
 import net.xiaoyu233.mitemod.miteite.render.entity.RenderAnnihilationSkeleton;
+import net.xiaoyu233.mitemod.miteite.render.entity.RenderSpiderQueen;
 import net.xiaoyu233.mitemod.miteite.render.entity.RenderWanderingWitch;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,6 +35,7 @@ public class RenderManagerTrans {
       this.q.put(EntityAncientDragon.class, new RenderAncientDragon());
       this.q.put(EntityAnnihilationSkeleton.class, new RenderAnnihilationSkeleton());
       this.q.put(EntityWanderingWitch.class, new RenderWanderingWitch());
+      this.q.put(EntitySpiderQueen.class, new RenderSpiderQueen(1.45F));
 //      this.q.put(EntityThunderMan.class, new RenderEntityThunderMan());
       for (bgm o : this.q.values()) {
          o.a(ReflectHelper.dyCast(bgl.class, this));
