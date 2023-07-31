@@ -446,7 +446,7 @@ public class Configs {
                             continue;
                         }
                     }
-                    if(item instanceof ItemWorldMap) {
+                    if(item instanceof ItemWorldMap || item instanceof ItemPotion) {
                         continue;
                     }
                     try {
@@ -564,7 +564,7 @@ public class Configs {
                             continue;
                         }
                     }
-                    if (item instanceof ItemWorldMap) {
+                    if (item instanceof ItemWorldMap || item instanceof ItemPotion) {
                         continue;
                     }
                     if (item.getHasSubtypes()) {
