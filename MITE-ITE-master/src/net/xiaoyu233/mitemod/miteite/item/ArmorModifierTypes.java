@@ -11,12 +11,11 @@ public enum ArmorModifierTypes implements ItemModifierTypes{
     PROJECTILE_PROTECTION_MODIFIER(0.5F,"弹射物保护", EnumChatFormat.BLUE,7,3,(stack -> hasNotOtherProtectionModifier(stack,3))),
     EXPLOSION_PROTECTION_MODIFIER(0.5F,"爆炸保护", EnumChatFormat.GREEN,7,3,(stack -> hasNotOtherProtectionModifier(stack,2))),
     FIRE_PROTECTION_MODIFIER(0.5F,"火焰保护", EnumChatFormat.RED,7,3,(stack -> hasNotOtherProtectionModifier(stack,0))),
-    PROTECTION_MODIFIER(0.2F,"保护",EnumChatFormat.DARK_RED,5,3,(stack -> hasNotOtherProtectionModifier(stack,1))),
+    PROTECTION_MODIFIER(0.2F,"保护",EnumChatFormat.DARK_RED,7,3,(stack -> hasNotOtherProtectionModifier(stack,1))),
     STEADY_MODIFIER(0.15F,"稳定",EnumChatFormat.BROWN,8,3,(stack -> true)),
     BLESSED_MODIFIER(1F,"神圣",EnumChatFormat.YELLOW,8,3,(stack -> true)),
     INDOMITABLE(0.25f,"坚毅不倒",EnumChatFormat.DARK_GRAY,5,4,itemStack -> itemStack.getItem() instanceof ItemCuirass),
     IMMUNITY(0.15f,"免疫",EnumChatFormat.DARK_AQUA,3,4,itemStack -> itemStack.getItem() instanceof ItemHelmet),
-
     INVINCIBLE(0.05f,"精力充沛",EnumChatFormat.DARK_GREEN,2,4,itemStack -> itemStack.getItem() instanceof ItemLeggings),
     AGILITY(0.05f,"灵敏",EnumChatFormat.LIGHT_PURPLE,2,4,itemStack -> itemStack.getItem() instanceof ItemBoots);
     public final String nbtName;

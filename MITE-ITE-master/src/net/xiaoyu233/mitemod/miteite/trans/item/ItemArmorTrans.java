@@ -265,7 +265,7 @@ public abstract class ItemArmorTrans extends Item implements IDamageableItem, IU
    }
 
    public int getMaxToolLevel(ItemStack itemStack){
-      return this.getMaterialForDurability().getMinHarvestLevel() * 3 + itemStack.getForgingGrade() + 3;
+      return this.getMaterialForDurability().getMinHarvestLevel() * 3 + itemStack.getForgingGrade() * 3;
    }
 
    public boolean isMaxToolLevel(ItemStack itemStack) {
