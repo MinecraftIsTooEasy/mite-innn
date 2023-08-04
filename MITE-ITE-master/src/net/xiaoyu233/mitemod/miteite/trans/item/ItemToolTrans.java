@@ -171,6 +171,8 @@ public class ItemToolTrans extends Item implements IUpgradableItem {
          return 2.0F;
       } else if (this.effective_material == Materials.vibranium) {
          return 3.5F;
+      } else if (this.effective_material == Materials.infinity) {
+         return 20.0F;
       } else {
          Minecraft.setErrorMessage("getMaterialHarvestEfficiency: tool material not handled");
          return 0.0F;

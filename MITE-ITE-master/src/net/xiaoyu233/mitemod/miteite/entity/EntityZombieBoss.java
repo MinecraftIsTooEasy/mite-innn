@@ -35,6 +35,12 @@ public class EntityZombieBoss extends EntityZombie {
         }
     }
 
+
+//    @Override
+//    public void dropContainedItems() {
+//
+//    }
+
     protected void dropFewItems(boolean recently_hit_by_player, DamageSource damage_source) {
         if (recently_hit_by_player) {
             ItemStack stack;

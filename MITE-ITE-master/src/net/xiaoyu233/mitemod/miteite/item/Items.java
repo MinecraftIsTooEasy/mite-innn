@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.item;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteinnn.item.ItemBaubles;
 import net.xiaoyu233.mitemod.miteinnn.item.ItemEndBook;
+import net.xiaoyu233.mitemod.miteinnn.item.ItemInfinitySword;
 import net.xiaoyu233.mitemod.miteite.block.Blocks;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
@@ -107,6 +108,7 @@ public class Items extends Item{
     public static final Item baublesDamageBoost = new ItemBaubles(Constant.getNextItemID(), MobEffectList.damageBoost);
     public static final Item baublesMoveSpeed = new ItemBaubles(Constant.getNextItemID(), MobEffectList.moveSpeed);
     public static final Item baublesResistance = new ItemBaubles(Constant.getNextItemID(), MobEffectList.resistance);
+    public static final ItemInfinitySword infinitySword = new ItemInfinitySword(Constant.getNextItemID());
 
     private static Item register(String resourceLocation, Item item, CreativeModeTab tab) {
         item.setResourceLocation(item.getResourceLocationPrefix() + resourceLocation);
@@ -215,6 +217,7 @@ public class Items extends Item{
         register("baubles/damage_boost", baublesDamageBoost);
         register("baubles/move_speed", baublesMoveSpeed);
         register("baubles/resistance", baublesResistance);
+        register("infinity_sword", infinitySword);
     }
 
     public static void registerRecipes(RecipeRegister register) {

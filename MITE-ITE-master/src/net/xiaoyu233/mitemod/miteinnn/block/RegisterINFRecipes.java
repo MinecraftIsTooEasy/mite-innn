@@ -32,7 +32,7 @@ public class RegisterINFRecipes {
                 'F', Items.voucherZombieLord,
                 'G', Items.voucherAnnihilationSkeleton,
                 'K', Items.voucherExchanger,
-                'L', Items.itemDynamicCoreIron,
+                'L', Item.swordMithril,
                 'R', Block.blockAncientMetal);
     }
 

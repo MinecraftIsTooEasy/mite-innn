@@ -15,10 +15,6 @@ public final class BlockLeaves1 extends BlockTransparant {
     private int e;
     private IIcon[][] iconArray = new IIcon[2][];
     int[] adjacentTreeBlocks;
-    public static final int OAK = 0;
-    public static final int SPRUCE = 1;
-    public static final int BIRCH = 2;
-    public static final int JUNGLE = 3;
 
     protected BlockLeaves1(int par1) {
         super(par1, Material.tree_leaves, false);
@@ -272,18 +268,7 @@ public final class BlockLeaves1 extends BlockTransparant {
 
     }
 
-    public static boolean isBlockUnplacedJungleLeaves(World world, int x, int y, int z) {
-        Block block = Block.blocksList[world.getBlockId(x, y, z)];
-        if (block != Blocks.leaves1) {
-            return false;
-        } else {
-            int metadata = world.getBlockMetadata(x, y, z);
-            return metadata == 3 || metadata == 11;
-        }
-    }
-
-    public boolean hidesAdjacentSide(IBlockAccess block_access, int x, int y, int z, Block neighbor, int side)
-    {
+    public boolean hidesAdjacentSide(IBlockAccess block_access, int x, int y, int z, Block neighbor, int side) {
         return false;
     }
 }

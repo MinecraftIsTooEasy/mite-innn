@@ -32,6 +32,7 @@ public class EnumEquipmentMaterials{
     }
 
     public static final EnumEquipmentMaterial vibranium = newEnumEquipmentMaterial(512.0f, 120, EnumQuality.legendary, "vibranium");
+    public static final EnumEquipmentMaterial infinity = newEnumEquipmentMaterial(64800.0f, 0, EnumQuality.legendary, "infinity");
     private static final EnumEquipmentMaterial newEnumEquipmentMaterial(float durability, int enchantability, EnumQuality max_quality, String name){
         try {
             return (EnumEquipmentMaterial) constructorAccessor.newInstance(new Object[]{name,ordinary++,durability,enchantability,max_quality,name});
