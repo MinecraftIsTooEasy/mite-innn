@@ -17,6 +17,7 @@ import net.xiaoyu233.mitemod.miteite.util.BlockPos;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
 import net.xiaoyu233.mitemod.miteite.util.Constant;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -277,6 +278,42 @@ public abstract class EntityPlayerTrans extends EntityLiving implements ICommand
    public float getGemSumNumeric(GemModifierTypes gemModifierTypes) {
       return (float) this.getGemSumLevel(gemModifierTypes) * gemModifierTypes.getRate();
    }
+
+   @Shadow
+   @Final
+   protected String username;
+   @Shadow
+   public void setSizeProne() {
+   }
+   @Shadow
+   public EntityItem dropPlayerItemWithRandomChoice(ItemStack par1ItemStack, boolean par2) {
+      return null;
+   }
+
+//   public void onDeath(DamageSource par1DamageSource) {
+//      super.onDeath(par1DamageSource);
+//      this.setSizeProne();
+//      this.setPosition(this.posX, this.posY, this.posZ);
+//      this.sendChatToPlayer(ChatMessage.createFromTranslationKey("您的死亡坐标为: " + this.posX + this.posY+ this.posZ).setColor(EnumChatFormat.RED));
+//      this.motionY = 0.10000000149011612;
+//      if (this.username.equals("Notch")) {
+//         this.dropPlayerItemWithRandomChoice(new ItemStack(Item.appleRed, 1), true);
+//      }
+//
+//      if (!this.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")) {
+//         this.inventory.dropAllItems();
+//      }
+//
+//      if (par1DamageSource != null) {
+//         this.motionX = (double)(-MathHelper.cos((this.attackedAtYaw + this.rotationYaw) * 3.1415927F / 180.0F) * 0.1F);
+//         this.motionZ = (double)(-MathHelper.sin((this.attackedAtYaw + this.rotationYaw) * 3.1415927F / 180.0F) * 0.1F);
+//      } else {
+//         this.motionX = this.motionZ = 0.0;
+//      }
+//
+//      this.yOffset = 0.1F;
+//      this.addStat(StatisticList.deathsStat, 1);
+//   }
 
    public int getGemSumLevel(GemModifierTypes gemModifierTypes) {
       int sum = 0;

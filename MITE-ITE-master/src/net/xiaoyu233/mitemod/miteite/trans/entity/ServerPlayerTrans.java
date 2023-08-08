@@ -15,12 +15,14 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 @Mixin(ServerPlayer.class)
@@ -68,7 +70,15 @@ public abstract class ServerPlayerTrans extends EntityPlayer implements ICraftin
   @Redirect(method = "canCommandSenderUseCommand", at = @At(value = "INVOKE", target = "Lnet/minecraft/Minecraft;inDevMode()Z"))
   public boolean injectDevMode(int par1, String par2Str) {
       return Minecraft.inDevMode() || (this !=null && this.isOp());
-  }
+   }
+
+
+  @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/GameRules;getGameRuleBooleanValue(Ljava/lang/String;)Z", shift = At.Shift.BEFORE), method = "onDeath")
+   public void sendInfoOnDeath(DamageSource par1DamageSource, CallbackInfo ci) {
+       this.sendChatToPlayer(ChatMessage.createFromTranslationKey("您的死亡坐标为:" + " X:" + (int)this.posX + " Y:" +
+               (int)this.posY + " Z:" + (int)this.posZ).setColor(EnumChatFormat.RED));
+   }
+
 
    public void displayGUIChestForMinecartEntity(EntityMinecartChest par1IInventory) {
       if (this.openContainer != this.inventoryContainer) {

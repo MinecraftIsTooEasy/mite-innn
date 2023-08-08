@@ -2,6 +2,7 @@ package net.xiaoyu233.mitemod.miteite.trans.container;
 
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -44,7 +45,8 @@ public abstract class PlayerInventoryGUITrans extends awe {
     @Shadow
     private long D;
     @Shadow
-    protected final Set r = new HashSet();
+    @Final
+    protected Set r;
     @Shadow
     protected boolean s;
     @Shadow

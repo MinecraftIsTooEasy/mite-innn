@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.container;
 import net.minecraft.*;
 import net.xiaoyu233.mitemod.miteite.inventory.container.SlotShop;
 import net.xiaoyu233.mitemod.miteite.util.ReflectHelper;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -12,11 +13,13 @@ import java.util.*;
 @Mixin(Container.class)
 public abstract class ContainerTrans {
     @Shadow
-    public final EntityPlayer player;
+    @Final
+    public EntityPlayer player;
     @Shadow
     private int field_94536_g;
     @Shadow
-    private final Set field_94537_h = new HashSet();
+    @Final
+    private Set field_94537_h;
     @Shadow
 
     public Slot slot_that_did_not_accept_item;

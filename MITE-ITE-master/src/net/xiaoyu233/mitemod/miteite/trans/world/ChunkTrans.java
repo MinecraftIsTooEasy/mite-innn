@@ -3,6 +3,7 @@ package net.xiaoyu233.mitemod.miteite.trans.world;
 import net.minecraft.Chunk;
 import net.minecraft.ChunkSection;
 import net.xiaoyu233.mitemod.miteite.util.Configs;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,7 +16,8 @@ import java.util.Random;
 @Mixin(Chunk.class)
 public class ChunkTrans {
     @Shadow
-    private final boolean is_empty;
+    @Final
+    private boolean is_empty;
     @Shadow
     public ChunkSection[] storageArrays;
 
