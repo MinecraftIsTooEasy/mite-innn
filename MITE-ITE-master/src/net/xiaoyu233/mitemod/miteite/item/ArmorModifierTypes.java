@@ -8,10 +8,10 @@ import java.util.function.Predicate;
 public enum ArmorModifierTypes implements ItemModifierTypes{
     //Armor Modifiers
     DURABILITY_MODIFIER(0.1F,"持久",EnumChatFormat.DARK_PURPLE,20,3,(stack -> true)),
-    PROJECTILE_PROTECTION_MODIFIER(0.5F,"弹射物保护", EnumChatFormat.BLUE,7,3,(stack -> hasNotOtherProtectionModifier(stack,3))),
-    EXPLOSION_PROTECTION_MODIFIER(0.5F,"爆炸保护", EnumChatFormat.GREEN,7,3,(stack -> hasNotOtherProtectionModifier(stack,2))),
-    FIRE_PROTECTION_MODIFIER(0.5F,"火焰保护", EnumChatFormat.RED,7,3,(stack -> hasNotOtherProtectionModifier(stack,0))),
-    PROTECTION_MODIFIER(0.2F,"保护",EnumChatFormat.DARK_RED,7,3,(stack -> hasNotOtherProtectionModifier(stack,1))),
+    PROJECTILE_PROTECTION_MODIFIER(0.5F,"弹射物保护", EnumChatFormat.BLUE,7,5,(stack -> hasNotOtherProtectionModifier(stack,3))),
+    EXPLOSION_PROTECTION_MODIFIER(0.5F,"爆炸保护", EnumChatFormat.GREEN,7,5,(stack -> hasNotOtherProtectionModifier(stack,2))),
+    FIRE_PROTECTION_MODIFIER(0.5F,"火焰保护", EnumChatFormat.RED,7,5,(stack -> hasNotOtherProtectionModifier(stack,0))),
+    PROTECTION_MODIFIER(0.2F,"保护",EnumChatFormat.DARK_RED,7,5,(stack -> hasNotOtherProtectionModifier(stack,1))),
     STEADY_MODIFIER(0.15F,"稳定",EnumChatFormat.BROWN,8,3,(stack -> true)),
     BLESSED_MODIFIER(1F,"神圣",EnumChatFormat.YELLOW,8,3,(stack -> true)),
     INDOMITABLE(0.25f,"坚毅不倒",EnumChatFormat.DARK_GRAY,5,4,itemStack -> itemStack.getItem() instanceof ItemCuirass),

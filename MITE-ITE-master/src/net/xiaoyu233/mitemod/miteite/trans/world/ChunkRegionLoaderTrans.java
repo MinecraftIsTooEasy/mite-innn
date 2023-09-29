@@ -16,11 +16,16 @@ import java.util.Map.Entry;
 @Mixin(ChunkRegionLoader.class)
 public class ChunkRegionLoaderTrans {
    @ModifyConstant(method = {
-           "handleSectionChecksumFailure",
+//           "handleSectionChecksumFailure",
            "getInvalidSectionBlockConversionIdsOrMetadata"
    }, constant = @Constant(intValue = 256))
    private static int injected(int value) {
       return 1024;
+   }
+
+   @Redirect(method = "readChunkFromNBT", at = @At(value = "INVOKE", target = "Lnet/minecraft/ChunkRegionLoader;handleSectionChecksumFailure(Lnet/minecraft/ChunkSection;)V"))
+   public void removeConflictFunction(ChunkRegionLoader _this,ChunkSection var13) {
+      // fix树叶变床
    }
 
    @Shadow

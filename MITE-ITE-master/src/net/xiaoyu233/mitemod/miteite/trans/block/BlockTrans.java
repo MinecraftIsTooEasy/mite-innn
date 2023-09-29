@@ -12,10 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin(Block.class)
 public abstract class BlockTrans {
-   @ModifyConstant(method = {
-           "<clinit>",
-           "getBlock(Ljava/lang/String;)Lnet/minecraft/Block;",
-   }, constant = @Constant(intValue = 256))
+   @ModifyConstant(method = {"<clinit>", "getBlock(Ljava/lang/String;)Lnet/minecraft/Block;",}, constant = @Constant(intValue = 256))
    private static int injected(int value) {
       return 1024;
    }
